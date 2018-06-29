@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54866157010851486}
   - component: {fileID: 114654887947063946}
   m_Layer: 0
-  m_Name: Cube (5)
+  m_Name: TestPourGit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
