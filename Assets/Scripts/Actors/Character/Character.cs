@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class Character : MonoBehaviour, IDamageable, IExplosable {
 
@@ -10,16 +11,30 @@ public class Character : MonoBehaviour, IDamageable, IExplosable {
 
 	public Rigidbody rb;
 
-
+    public CharacterCard characterCard;
+    public string name;
 
 
 	// Use this for initialization
-	void Start () {
+	public virtual void Start () {
 
 		rb = this.GetComponent<Rigidbody>();
 
 		health = 1;
-	}
+
+        InitializeCharacterCard();
+    }
+
+    void InitializeCharacterCard() {
+        if (characterCard != null) {
+            name = characterCard.name;
+            IsoCharacterMovements charMovement = this.GetComponent<IsoCharacterMovements>();
+            if (charMovement != null){
+                charMovement.runningSpeedMax = characterCard.runningSpeed * 1000f;
+                charMovement.jumpPower = characterCard.jumpHeight * 150f;
+            }
+        }
+    }
 
 	public virtual void Damage(int damageValue){
 		health = 0;

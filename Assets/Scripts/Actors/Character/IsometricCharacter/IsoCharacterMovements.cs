@@ -11,13 +11,13 @@ public class IsoCharacterMovements : Character {
 	//Variables de deplacement ect
 	//[SerializeField] float walkingSpeed = 0.5f;
 	[SerializeField] float runningSpeedAct;
-	[SerializeField] float runningSpeedMax = 10f;
+    public float runningSpeedMax;
 	[SerializeField] float runningSpeedAcceleration = 1f;
 	[SerializeField] float velocityMagnetudeMax = 7f;
 	[SerializeField] float runningBrake = 1f;
 
 
-	[SerializeField] float jumpPower = 360;
+	public float jumpPower = 360;
 	[Range(1f, 100f)][SerializeField] float gravityMultiplier = 2f;
 	[SerializeField] float groundCheckDistance = 100f;
 
@@ -56,8 +56,9 @@ public class IsoCharacterMovements : Character {
 	public int directionAnim;
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
 
+        base.Start();
 
 		//Prendre lanimator dans le sprite enfant GameObject
 		//animator = GetComponentInChildren<Animator>();
@@ -251,7 +252,7 @@ public class IsoCharacterMovements : Character {
 			animator.SetTrigger ("Jump");
 			break;
 		case CharacterState.Falling:
-			animator.SetTrigger ("Falling");
+			//animator.SetTrigger ("Falling");
 			break;
 		
 		}
