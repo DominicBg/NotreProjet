@@ -11,9 +11,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bafd4ea9cf8a0b42a7670847f86ba5e, type: 3}
   m_Name: Michelle
   m_EditorClassIdentifier: 
-  characterName: 
-  description: 
+  characterName: Michelle
+  description: zxzxzxzxzx
   characterPrefab: {fileID: 0}
   characterBomb: {fileID: 0}
-  runningSpeed: 0
-  jumpHeight: 0
+  runningSpeed: 2
+  jumpHeight: 5

@@ -17,5 +17,5 @@ MonoBehaviour:
     type: 2}
   characterBomb: {fileID: 114990240367596370, guid: 793951a672b9e5a48be6b7543fbe79ec,
     type: 2}
-  runningSpeed: 0
-  jumpHeight: 0
+  runningSpeed: 3
+  jumpHeight: 3
