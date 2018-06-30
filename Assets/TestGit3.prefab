@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 54941165026015084}
   - component: {fileID: 114891698738925136}
   m_Layer: 0
-  m_Name: Cube (10)
+  m_Name: TestGit3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
