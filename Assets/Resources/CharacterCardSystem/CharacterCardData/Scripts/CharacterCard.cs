@@ -6,7 +6,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Character Card", menuName = "Character Card System/Character Card")]
 public class CharacterCard : ScriptableObject {
 
-    public new string characterName;
+    public string characterName;
     public string description;
 
     public Character characterPrefab;
