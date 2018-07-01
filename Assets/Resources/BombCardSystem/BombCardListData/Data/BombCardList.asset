@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 45dbcf79a5cc9c6488be12895bf56b0d, type: 3}
+  m_Name: BombCardList
+  m_EditorClassIdentifier: 
+  bombCardList:
+  - {fileID: 11400000, guid: 28d746887671e40428a12d418a72eab6, type: 2}
+  - {fileID: 11400000, guid: 7c8ec8a7bd59ef242bed6aae377e71f6, type: 2}
+  - {fileID: 11400000, guid: ed72f0bd0c4404d4a9c324f169c856af, type: 2}
