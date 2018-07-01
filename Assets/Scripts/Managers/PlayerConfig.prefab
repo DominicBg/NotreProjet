@@ -82,8 +82,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerNumber: 0
-  playerActive: 0
+  activated: 0
   uiController: {fileID: 114733763900146782}
+  character: {fileID: 0}
+  playerColor: {r: 0, g: 0, b: 0, a: 0}
 --- !u!114 &114733763900146782
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,9 +97,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d7fc33be36faf4a45b49246c805b7be1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerNumber: 0
   button1: 0
+  button1Ready: 0
   button2: 0
+  button2Ready: 0
   up: 0
   down: 0
   left: 0
   right: 0
+  directionReady: 0
+  connectedCanvas: {fileID: 0}
