@@ -17,8 +17,6 @@ public class BombCardListEditor : Editor {
     {
         bombCardList = (BombCardList)target;
         ActualizeBombList();
-
-
     }
 
     public override void OnInspectorGUI()

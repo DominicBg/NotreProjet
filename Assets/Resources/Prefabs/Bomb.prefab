@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 135410291537244894}
   - component: {fileID: 23509433450188558}
   - component: {fileID: 114990240367596370}
+  - component: {fileID: 54450386811017246}
   m_Layer: 0
   m_Name: Bomb
   m_TagString: Untagged
@@ -56,6 +57,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 47da31e5d742e08439f2126739cafb2a, type: 2}
   m_StaticBatchInfo:
@@ -84,6 +86,21 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1451319416604928}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!54 &54450386811017246
+Rigidbody:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1451319416604928}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!114 &114990240367596370
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -95,6 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40221064ebdc8cf4692b4138c548b3b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bombCard: {fileID: 11400000, guid: 28d746887671e40428a12d418a72eab6, type: 2}
+  bombTrigger: {fileID: 0}
+  bombMaterial: {fileID: 0}
+  rb: {fileID: 54450386811017246}
   speed: 50
   targetPosition: {x: 0, y: 0, z: 0}
   totaleDistanceToTarget: 0
@@ -106,6 +127,8 @@ MonoBehaviour:
   debrisMax: 20
   zone: {fileID: 0}
   expForce: 1600
+  bombColor: {r: 0, g: 0, b: 0, a: 0}
+  rendererB: {fileID: 0}
 --- !u!135 &135410291537244894
 SphereCollider:
   m_ObjectHideFlags: 1

@@ -11,8 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45639ec225f3c64784a6cf55b5235ef, type: 3}
   m_Name: CollanteV1
   m_EditorClassIdentifier: 
-  bombName: 
+  bombName: nianinaia
   description: 
   bombGameObject: {fileID: 0}
   explosionForce: 0
   maxBombNumber: 0
+  bombMaterial: 1
+  bombTrigger: 0
+  triggerTime: 1

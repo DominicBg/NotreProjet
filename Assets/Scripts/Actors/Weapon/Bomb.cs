@@ -4,6 +4,12 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour {
 
+    public BombCard bombCard;
+    public BombTrigger bombTrigger;
+    public BombMaterial bombMaterial;
+
+    public Rigidbody rb;
+
 	public float speed; 
 	public Vector3 targetPosition;
 	public float totaleDistanceToTarget;
@@ -29,39 +35,50 @@ public class Bomb : MonoBehaviour {
 		zone = (BombZone)Resources.Load ("Prefabs/BombZone", typeof(BombZone));
 	
 		totaleDistanceToTarget = Vector3.Distance (transform.position, targetPosition);
-
+        
+        //Truc pour changer la couleur des bombes, a ranger ailleurs
 		rendererB = GetComponent<Renderer> ();
-
-		Debug.Log (rendererB);
-		//rendererB.material.shader = Shader.Find ("_Color");
-		Debug.Log (rendererB.material);
-		Debug.Log (rendererB.material.shader);
-
 		rendererB.material.SetColor ("_Color", bombColor);
 		Color bombColor2 = bombColor;
 		bombColor2.a = 0.5f;
 		rendererB.material.SetColor ("_OutlineColor", bombColor2);
-	}
+
+        InitializeBombCard();
+
+        rb.AddForce((targetPosition - transform.position).normalized * 5000, ForceMode.Force);
+
+
+    }
+
+    void InitializeBombCard()
+    {
+
+        expForce = bombCard.explosionForce * 800f;
+
+
+        switch (bombCard.bombMaterial)
+        {
+            case BombCard.BombMaterialEnum.BouncingBomb:
+                bombMaterial = gameObject.AddComponent<BouncingBomb>();
+                break;
+            case BombCard.BombMaterialEnum.StickyBomb:
+                bombMaterial = gameObject.AddComponent<StickyBomb>();
+                break;
+        }
+
+        switch (bombCard.bombTrigger)
+        {
+            case BombCard.BombTriggerEnum.Trigger:
+                bombTrigger = gameObject.AddComponent<ManualTrigger>();
+                break;
+            case BombCard.BombTriggerEnum.Timer:
+                bombTrigger = gameObject.AddComponent<TimerTrigger>();
+                TimerTrigger time = bombTrigger.GetComponent<TimerTrigger>();
+                time.timer = bombCard.triggerTime;
+                break;
+        }
+    }
 	
-	// Update is called once per frame
-	void Update () {	
-		rendererB.material.SetColor ("MainColor", Color.blue);
-
-		actualDistanceToTarget = Vector3.Distance (transform.position, targetPosition);
-
-		if (isSticked && !isZoned) {
-			DisplayZone ();
-		}
-
-		if (actualDistanceToTarget <= 0.01) {
-			isSticked = true;
-		}
-
-		if (!isSticked) {	
-			float step = speed * Time.deltaTime;
-			transform.position = Vector3.MoveTowards (transform.position, targetPosition, step);					
-		} 
-	}
 
 	//Au declanchement de L'explosion
 	public void Explode(){

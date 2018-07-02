@@ -15,5 +15,12 @@ public class BombCard : ScriptableObject {
 
     public int maxBombNumber;
 
+    public enum BombMaterialEnum { StickyBomb, BouncingBomb};
+    public BombMaterialEnum bombMaterial;
+
+    public enum BombTriggerEnum { Trigger, Timer};
+    public BombTriggerEnum bombTrigger;
+
+    public float triggerTime;
 
 }
