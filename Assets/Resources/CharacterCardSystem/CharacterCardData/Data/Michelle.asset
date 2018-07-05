@@ -16,6 +16,6 @@ MonoBehaviour:
   characterPrefab: {fileID: 114087678880162660, guid: 45fbd27efeb276147a2b71b542b7c59c,
     type: 2}
   characterBomb: {fileID: 0}
-  characterBombCard: {fileID: 0}
+  characterBombCard: {fileID: 11400000, guid: 28d746887671e40428a12d418a72eab6, type: 2}
   runningSpeed: 2
-  jumpHeight: 5
+  jumpHeight: 1

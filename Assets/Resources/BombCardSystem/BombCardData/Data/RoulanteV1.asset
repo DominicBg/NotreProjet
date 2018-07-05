@@ -16,3 +16,6 @@ MonoBehaviour:
   bombGameObject: {fileID: 0}
   explosionForce: 0
   maxBombNumber: 0
+  bombMaterial: 1
+  bombTrigger: 1
+  triggerTime: 2
