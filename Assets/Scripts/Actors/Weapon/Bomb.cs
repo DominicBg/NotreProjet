@@ -52,9 +52,7 @@ public class Bomb : MonoBehaviour {
 
     void InitializeBombCard()
     {
-
         expForce = bombCard.explosionForce * 800f;
-
 
         switch (bombCard.bombMaterial)
         {

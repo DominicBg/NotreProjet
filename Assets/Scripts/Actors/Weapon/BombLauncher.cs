@@ -1,11 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
 
 public class BombLauncher : Weapon {
 
 	public GameObject spawner;
 	public GameObject cible;
+
+    public BombCard bombCard;
 
 	public Bomb[] bombes;
 	public Bomb usedBomb;
@@ -39,19 +42,34 @@ public class BombLauncher : Weapon {
 
 	// Use this for initialization
 	void Start () {
-		//Load bomb
-		usedBomb = (Bomb)Resources.Load ("Prefabs/Bomb", typeof(Bomb));
+        InitializeBomb();
 
 		//Create Bomb list
 		bombes = new Bomb[nBombesMax];
 
 		charColor = GetComponentInParent<PlayableCharacter> ().playerColor;
 	}
+
+    void InitializeBomb()
+    {
+        Character zzz = (Character)GetComponentInParent<Character>();
+
+        if(zzz != null)
+        {
+            string assetPath = AssetDatabase.GetAssetPath(zzz.characterCard);
+            CharacterCard charCard = AssetDatabase.LoadAssetAtPath(assetPath, typeof(CharacterCard)) as CharacterCard;
+            Debug.Log(charCard);
+
+            assetPath = AssetDatabase.GetAssetPath(charCard.characterBombCard);
+            bombCard = AssetDatabase.LoadAssetAtPath(assetPath, typeof(BombCard)) as BombCard;
+        }
+
+        Debug.Log("WEAPON BOMB CARD" + bombCard.name);
+        usedBomb = (Bomb)Resources.Load("Prefabs/Bomb", typeof(Bomb));
+        
+    }
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
 
 	void FixedUpdate(){
 		AutoAim ();
@@ -169,7 +187,9 @@ public class BombLauncher : Weapon {
 		if (canShoot) {	
 			if (nBombesAct < nBombesMax) {
 				Bomb tempBomb = InstantiateNewBomb ();
-				canShoot = false;
+                tempBomb.bombCard = bombCard;
+                Debug.Log(tempBomb.bombCard);
+                canShoot = false;
 				tempBomb.targetPosition = targetPosition;
 				tempBomb.bombColor = charColor;
 				StartCoroutine (ResetCanShoot ());			

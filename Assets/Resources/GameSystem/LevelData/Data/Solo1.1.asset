@@ -17,4 +17,10 @@ MonoBehaviour:
   levelMinPlayers: 1
   levelMaxPlayers: 4
   imageLevel: {fileID: 21300000, guid: ec02e78cb243578418ede9b2a9db1805, type: 3}
+  textureLevel: {fileID: 0}
   levelDescription: NYS MAP LEL
+  startCharacter:
+  - {fileID: 0}
+  - {fileID: 11400000, guid: f718a8dea14537b45bed6fc1cc0a727c, type: 2}
+  - {fileID: 11400000, guid: afccebd9d33651f409f3a90f77daf3f1, type: 2}
+  - {fileID: 0}

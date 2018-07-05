@@ -12,7 +12,8 @@ public class Character : MonoBehaviour, IDamageable, IExplosable {
 	public Rigidbody rb;
 
     public CharacterCard characterCard;
-    public string name;
+
+    public string characterName;
 
 
 	// Use this for initialization
@@ -25,15 +26,18 @@ public class Character : MonoBehaviour, IDamageable, IExplosable {
         InitializeCharacterCard();
     }
 
-    void InitializeCharacterCard() {
+    void InitializeCharacterCard() {        
+        
         if (characterCard != null) {
-            name = characterCard.name;
+            characterName = characterCard.name;
             IsoCharacterMovements charMovement = this.GetComponent<IsoCharacterMovements>();
             if (charMovement != null){
                 charMovement.runningSpeedMax = characterCard.runningSpeed * 1000f;
                 charMovement.jumpPower = characterCard.jumpHeight * 150f;
             }
         }
+        
+
     }
 
 	public virtual void Damage(int damageValue){

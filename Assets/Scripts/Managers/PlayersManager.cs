@@ -13,7 +13,7 @@ public class PlayersManager : MonoBehaviour {
 	public static PlayersManager playersManager;
 
 	//Initializer
-	PlayersInitialisation playersInit;
+	CharactersInitialisation playersInit;
 
 	public int playersNumber;
 	public PlayableCharacter playerBase;
@@ -116,7 +116,7 @@ public class PlayersManager : MonoBehaviour {
 		players = new PlayableCharacter[playersNumber];
 
 		//Lancer L'initialisation
-		playersInit = new PlayersInitialisation (this);
+		playersInit = new CharactersInitialisation (this);
 		playersInit.Initialization ();
 	}
 */

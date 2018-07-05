@@ -13,7 +13,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterName: Michelle
   description: zxzxzxzxzx
-  characterPrefab: {fileID: 0}
+  characterPrefab: {fileID: 114087678880162660, guid: 45fbd27efeb276147a2b71b542b7c59c,
+    type: 2}
   characterBomb: {fileID: 0}
+  characterBombCard: {fileID: 0}
   runningSpeed: 2
   jumpHeight: 5

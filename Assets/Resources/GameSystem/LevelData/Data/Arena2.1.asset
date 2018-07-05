@@ -17,4 +17,10 @@ MonoBehaviour:
   levelMinPlayers: 1
   levelMaxPlayers: 4
   imageLevel: {fileID: 21300000, guid: 525db26af4541ce40a887cc0c56b30d9, type: 3}
+  textureLevel: {fileID: 0}
   levelDescription: asf
+  startCharacter:
+  - {fileID: 11400000, guid: f718a8dea14537b45bed6fc1cc0a727c, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

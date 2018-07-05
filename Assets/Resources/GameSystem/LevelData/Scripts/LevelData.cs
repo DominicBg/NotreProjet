@@ -17,5 +17,8 @@ public class LevelData : ScriptableObject {
 	public int levelMaxPlayers;
 
 	public Sprite imageLevel;
+    public Texture textureLevel;
 	public string levelDescription;
+
+    public CharacterCard[] startCharacter;
 }

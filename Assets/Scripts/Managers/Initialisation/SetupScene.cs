@@ -80,7 +80,7 @@ public class SetupScene : MonoBehaviour{
 
 
 	public void InitializePlayers(){
-		PlayersInitialisation playersInit = new PlayersInitialisation (this);
+		CharactersInitialisation playersInit = new CharactersInitialisation (this);
 		playersInit.Initialization ();
 	}
 

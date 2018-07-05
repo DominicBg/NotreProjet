@@ -12,7 +12,7 @@ public class CharacterCard : ScriptableObject {
     public Character characterPrefab;
 
     public Bomb characterBomb;
-
+    public BombCard characterBombCard;
     public float runningSpeed;
     public float jumpHeight;
 }
