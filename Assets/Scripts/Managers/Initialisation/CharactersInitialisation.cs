@@ -77,6 +77,9 @@ public class CharactersInitialisation {
 
             SetInformationFromPlayerCard(characterToInstantiate[i], i);
         }
+
+        playersManager.charactersPlayedNow = new Character[characterToInstantiate.Length];
+        playersManager.charactersPlayedNow = characterToInstantiate;
     }
 
 

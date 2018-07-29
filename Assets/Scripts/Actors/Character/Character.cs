@@ -26,6 +26,8 @@ public class Character : MonoBehaviour, IDamageable, IExplosable {
         InitializeCharacterCard();
     }
 
+    //ZED
+
     void InitializeCharacterCard() {        
         
         if (characterCard != null) {

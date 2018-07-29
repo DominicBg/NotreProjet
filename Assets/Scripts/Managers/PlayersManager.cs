@@ -26,6 +26,8 @@ public class PlayersManager : MonoBehaviour {
 
 	public PlayerConfig[] playersConfig;
 
+    public Character[] charactersPlayedNow;
+
 	void Awake (){
 		//Ne pas detruire le chargement en changeant de scene
 		DontDestroyOnLoad (gameObject);

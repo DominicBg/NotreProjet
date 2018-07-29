@@ -14,8 +14,8 @@ MonoBehaviour:
   bombName: 
   description: 
   bombGameObject: {fileID: 0}
-  explosionForce: 0
-  maxBombNumber: 0
+  explosionForce: 5
+  maxBombNumber: 5
   bombMaterial: 0
   bombTrigger: 1
   triggerTime: 1

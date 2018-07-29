@@ -92,15 +92,15 @@ public class SetupScene : MonoBehaviour{
 
 	public void InitializeCamera(){
 
-		/*
-		CameraFollowing cam = (CameraFollowing)GameObject.FindObjectOfType (typeof(CameraFollowing));
-		cam.m_Targets = new Transform[gameManager.playersManager.players.Length];
+        Debug.Log("CameraInitialization From :" + this);
 
-		for (int i = 0; i < gameManager.playersManager.players.Length; i++) {
-			cam.m_Targets [i] = gameManager.playersManager.players [i].transform;
+		CameraFollowing cam = (CameraFollowing)GameObject.FindObjectOfType (typeof(CameraFollowing));
+		cam.m_Targets = new Transform[gameManager.playersManager.charactersPlayedNow.Length];
+
+		for (int i = 0; i < cam.m_Targets.Length; i++) {
+			cam.m_Targets [i] = gameManager.playersManager.charactersPlayedNow [i].transform;
 		}
-		cam.enabled = true;
-		*/
+		cam.enabled = true;		
 
 		cameraIsLoaded = true;
 	}

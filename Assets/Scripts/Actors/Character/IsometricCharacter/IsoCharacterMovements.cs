@@ -15,7 +15,7 @@ public class IsoCharacterMovements : Character {
 	[SerializeField] float runningSpeedAcceleration = 1f;
 	[SerializeField] float velocityMagnetudeMax = 7f;
 	[SerializeField] float runningBrake = 1f;
-
+    public float airMoveVelocityMagnetudeMax = 7f;
 
 	public float jumpPower = 360;
 	[Range(1f, 100f)][SerializeField] float gravityMultiplier = 2f;
@@ -25,7 +25,9 @@ public class IsoCharacterMovements : Character {
 	public CapsuleCollider capsule;
 
 	float origGroundCheckDistance;
+    Vector3 eulerAngleVelocity; // Pour la rotation
 	public bool isGrounded;
+    public bool isLifted;
 	//Vector3 groundNormal;
 
 	public float wallCheckDistance;
@@ -46,6 +48,7 @@ public class IsoCharacterMovements : Character {
 	public enum CharacterState
 	{
 		Idle,
+        Braking,
 		Running,
 		Jumping,
 		Falling,
@@ -74,93 +77,121 @@ public class IsoCharacterMovements : Character {
 		animator = GetComponentInChildren<Animator> ();
 		charState = CharacterState.Idle;
 
+        rb.maxAngularVelocity = 0f;
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        eulerAngleVelocity = new Vector3(0, 100, 0);
 	}
 
-	public void FixedUpdate(){
+    public void Update()
+    {
+    }
+
+    public void FixedUpdate(){
+        
 		SetCharacterDirectionForAnimation ();
 		UpdateAnimator ();
-	}
 
-	//Methode appelee au Fixed Update par IsometricCharacterController
-	public void Move(Vector2 move, bool jump){
+        CheckGroundStatus();
+        CheckWallStatus();
+        ApplyGravity();
+    }
 
-		if (isGrounded) {	
-			HandleGroundedMovement (jump);
-			if (move.magnitude > 0f) {			
-				CharacterRun ();
-			} else {
-				CharacterBrakeRunning ();
-			}
-			/*
-			//Change state for Animator
-			if (move.magnitude <= 0.1f) {
-				charState = CharacterState.Idle;
-			} else {
-				charState = CharacterState.Running;
-			}
-			*/
+
+
+    //Methode appelee au Fixed Update par IsometricCharacterController
+    public void Move(Vector2 move, bool jump){
+
+        ActualizeLastMoveDirection(move);
+
+        if (isGrounded) {	
+			HandleGroundedMovement (move, jump);
 		} else {
-			HandleAirborneMovement ();
+			HandleAirborneMovement (move);
 		}
+    }
 
-		ActualizeDirection (move);
-		CheckForWalls();
-		CheckGroundStatus ();
-		LimitPhysicsSpeed ();
-
-	}
-
-	void ActualizeDirection (Vector2 move){
+    void ActualizeLastMoveDirection (Vector2 move){
 		if (move.magnitude > 0f){
-			//move.Normalize ();
-			//lastMoveDirection = move;
 			lastMoveDirection.x = move.x;
 			lastMoveDirection.z = move.y;
 		}
 	}
 
 	void CharacterRun (){
-		if (runningSpeedAct < runningSpeedMax)				//Augmenter la vitesse de deplacement					
-			runningSpeedAct += runningSpeedAcceleration;
-		if (rb.velocity.magnitude < velocityMagnetudeMax) 	//Si on est pas a la vitesse maximum					
-			rb.AddForce ((lastMoveDirection + wallDecalage) * runningSpeedAct * Time.deltaTime, ForceMode.Force);	
-		charState = CharacterState.Running;
+        //Augmenter la vitesse d'acceleration du deplacement
+        if (runningSpeedAct <= runningSpeedMax - runningSpeedAcceleration)
+        {
+            runningSpeedAct += runningSpeedAcceleration;
+        }
+
+
+        //Si on est pas a la vitesse maximum				
+        Vector2 horizontalMovement = new Vector2(rb.velocity.x, rb.velocity.z);
+
+        //Acceleration dans la bonne direction
+        rb.AddForce(lastMoveDirection * runningSpeedAct * Time.deltaTime, ForceMode.Acceleration);
+
+        //Limiter la vitesse
+        rb.velocity = Vector3.ClampMagnitude(rb.velocity, velocityMagnetudeMax);
+
+        charState = CharacterState.Running;
 	}
 
 	void CharacterBrakeRunning(){
 		if (rb.velocity.magnitude > 0.1f) {	//Ralentir le depacement jusqu'au freinage					
-			rb.AddForce (- rb.velocity * runningBrake * Time.deltaTime, ForceMode.VelocityChange);
-		} else { //Bloquer le personnage					
+			rb.AddForce (- rb.velocity * runningBrake * Time.deltaTime, ForceMode.Acceleration);
+            charState = CharacterState.Braking;
+        }
+        else { //Bloquer le personnage					
 			runningSpeedAct = 0f;
 			charState = CharacterState.Idle;
 		}
 	}
 
-	void HandleGroundedMovement(bool jump){
-		if (jump) {
-			rb.velocity = new Vector3 (rb.velocity.x, jumpPower, rb.velocity.z);
-			isGrounded = false;
-			groundCheckDistance = 0.1f;
-			//Debug.Log ("JUMP!");
-			charState = CharacterState.Jumping;
+    void CharacterJump()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
+        SetNotOnGround();
+        charState = CharacterState.Jumping;
+    }
+
+	void HandleGroundedMovement(Vector2 move, bool jump){
+
+        if (move.magnitude > 0f)
+        {
+            CharacterRun();
+        }
+        else
+        {
+            CharacterBrakeRunning();
+        }
+
+        if (jump) {
+            CharacterJump();
 		}
 	}
 
-	void HandleAirborneMovement(){
-		Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
-		rb.AddForce (extraGravityForce);
+	void HandleAirborneMovement(Vector2 move){
 
-		groundCheckDistance = rb.velocity.y < 0 ? origGroundCheckDistance : 0.01f;
+        if(move.magnitude > 0f)
+        {
+            //Si on est pas a la vitesse maximum				
+            Vector2 horizontalMovement = new Vector2(rb.velocity.x, rb.velocity.z);
+            if(horizontalMovement.magnitude <= airMoveVelocityMagnetudeMax)
+            {
+                rb.AddForce(lastMoveDirection * 400 * Time.deltaTime, ForceMode.Acceleration);
+            }
 
-		//Changer letat quand le perso redescend
-		if (rb.velocity.y < 0) {
+        }
+
+        //Changer letat quand le perso redescend
+        if (rb.velocity.y < 0) {
 			charState = CharacterState.Falling;
 		}
-	}
 
-	void LimitPhysicsSpeed(){
 
-	}
+    }
+
 
 	/*
 	void UpdateAnimator(){	
@@ -186,7 +217,7 @@ public class IsoCharacterMovements : Character {
 	}
 	*/
 
-	void CheckForWalls(){
+	void CheckWallStatus(){
 
 		RaycastHit hitInfo;
 
@@ -212,25 +243,81 @@ public class IsoCharacterMovements : Character {
 		#endif	
 	}
 
-	void CheckGroundStatus(){
+    void CheckGroundStatus()
+    {
+        RaycastHit hitInfo;
 
-		RaycastHit hitInfo;
-		if (Physics.Raycast (transform.position, Vector3.down, out hitInfo, groundCheckDistance)) {
-			//groundNormal = hitInfo.normal;
-			isGrounded = true;
-			//animator.applyRootMotion = true;
-		} else {
-			isGrounded = false;
-			//groundNormal = Vector3.up;
-			//animator.applyRootMotion = false;
-		}
+        if (isGrounded)
+        {
+            //Voir si le personnage quitte le sol
+            if (!Physics.Raycast(transform.position, Vector3.down, out hitInfo, groundCheckDistance))
+            {
+                SetNotOnGround();
+            }
+        }
+        else if (!isGrounded)
+        {
+            //Voir si personnage atterit au sol
+            if (rb.velocity.y < 0)
+            {
+                //Prediction de la position en Y a la prochaine frame
+                //Faire la meme chose pour checker on WALLS
+                float predictedY = -rb.velocity.y * Time.deltaTime;
+                if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, predictedY))
+                {
+                    SetOnGround(hitInfo.point);
+                }
+            }
+        }
 
-		#if UNITY_EDITOR
-		Debug.DrawLine(transform.position + (Vector3.up * 0.1f), transform.position + (Vector3.down * groundCheckDistance));
-		#endif	
-	}
+        #if UNITY_EDITOR
+        Debug.DrawLine(transform.position, transform.position + (Vector3.down * groundCheckDistance), Color.black);
+        #endif
+    }
 
-	void SetAnimationDirection(){
+    void SetOnGround()
+    {
+        if (!isGrounded)
+        {
+            //Debug.Log("Switched to Grounded");
+            isGrounded = true;
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.angularVelocity = new Vector3(rb.angularVelocity.x, 0f, rb.angularVelocity.z);
+        }
+    }
+
+    void SetOnGround(Vector3 hitPoint)
+    {
+        if (!isGrounded)
+        {
+            //Debug.Log("Switched to Grounded, Snapped");
+            isGrounded = true;
+            rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
+            rb.angularVelocity = new Vector3(rb.angularVelocity.x, 0f, rb.angularVelocity.z);
+
+            //Snap to ground
+            transform.position = hitPoint;
+        }
+    }
+    void SetNotOnGround()
+    {
+        if (isGrounded)
+        {
+            //Debug.Log("Switched to NOT Grounded");
+            isGrounded = false;
+        }
+    }
+
+    void ApplyGravity()
+    {
+        if (!isGrounded)
+        {
+            Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
+            rb.AddForce(extraGravityForce);
+        }
+    }
+
+    void SetAnimationDirection(){
 		
 	}
 
@@ -262,6 +349,8 @@ public class IsoCharacterMovements : Character {
 		
 		int angle = Mathf.RoundToInt(Vector3.SignedAngle(lastMoveDirection, Vector3.forward, Vector3.up));
 
+        angle += 45;
+
 		if (angle > -45 && angle < 45) {
 			directionAnim = 0;
 		} else if (angle < -45 && angle > -135) {
@@ -271,6 +360,7 @@ public class IsoCharacterMovements : Character {
 		}else if (angle > 45 && angle < 135) {
 			directionAnim = 3;
 		}
+
 	}
 
 }

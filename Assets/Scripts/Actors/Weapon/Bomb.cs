@@ -45,9 +45,8 @@ public class Bomb : MonoBehaviour {
 
         InitializeBombCard();
 
-        rb.AddForce((targetPosition - transform.position).normalized * 5000, ForceMode.Force);
-
-
+        rb.AddForce((targetPosition - transform.position).normalized * 2000, ForceMode.Acceleration);
+        
     }
 
     void InitializeBombCard()
@@ -92,7 +91,7 @@ public class Bomb : MonoBehaviour {
 			if (explosable != null) {				
 				Rigidbody rb = hit.GetComponent<Rigidbody> ();
 				rb.AddExplosionForce (expForce, posExplosion, 12f, 10f);
-				Debug.Log ("EXPLOSABLE");
+				//Debug.Log ("EXPLOSABLE");
 			}
 		}
 

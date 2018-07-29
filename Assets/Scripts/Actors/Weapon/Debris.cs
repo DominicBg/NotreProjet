@@ -88,7 +88,7 @@ public class Debris : MonoBehaviour, IExplosable {
 
 	IEnumerator FadeOut(){
 		for (float i = 0; i < 1; i += Time.deltaTime / 0.3f) {
-			Debug.Log ("COUROUTRINE");
+			//Debug.Log ("COUROUTRINE");
 			float j = 1 - i;
 			rend.material.color = new Color (r, g, b, j);
 			yield return null;

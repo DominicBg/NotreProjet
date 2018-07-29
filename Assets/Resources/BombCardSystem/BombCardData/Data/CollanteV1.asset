@@ -14,8 +14,8 @@ MonoBehaviour:
   bombName: nianinaia
   description: 
   bombGameObject: {fileID: 0}
-  explosionForce: 0
+  explosionForce: 5
   maxBombNumber: 0
-  bombMaterial: 1
+  bombMaterial: 0
   bombTrigger: 0
   triggerTime: 1
