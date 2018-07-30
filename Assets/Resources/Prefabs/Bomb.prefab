@@ -125,7 +125,7 @@ MonoBehaviour:
   expRadius: 2.5
   debris: {fileID: 114837615872554178, guid: 3793c9cd2b133614bad8196ba06e505a, type: 2}
   debrisMax: 20
-  zone: {fileID: 0}
+  zone: {fileID: 114153583075670168, guid: dffd644eafa744848bb7508709995f04, type: 2}
   expForce: 1600
   bombColor: {r: 0, g: 0, b: 0, a: 0}
   rendererB: {fileID: 0}
