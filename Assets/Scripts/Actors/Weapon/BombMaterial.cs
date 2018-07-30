@@ -37,8 +37,8 @@ public class StickyBomb : BombMaterial
             }
             isSticked = true;
         }
-        
 
+        thisBomb.DisplayZone();
     }
 }
 

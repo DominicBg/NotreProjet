@@ -108,7 +108,7 @@ public class Bomb : MonoBehaviour {
 	void MakeCameraShake(){
 	}
 
-	void DisplayZone(){
+	public void DisplayZone(){
 		BombZone bomb = Instantiate (zone, transform.position, transform.rotation);
 		bomb.transform.parent = gameObject.transform;
 		bomb.transform.localScale = Vector3.one * (expRadius * 2);
