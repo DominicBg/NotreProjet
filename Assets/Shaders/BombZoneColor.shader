@@ -1,5 +1,5 @@
 ﻿
-Shader "Custom/ZoneTest"
+Shader "Custom/BombZoneColor"
 {
 	Properties
 	{
