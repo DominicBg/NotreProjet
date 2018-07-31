@@ -108,9 +108,15 @@ public class Bomb : MonoBehaviour {
 	void MakeCameraShake(){
 	}
 
-	public void DisplayZone(){
-		BombZone bomb = Instantiate (zone, transform.position, transform.rotation);
-		bomb.transform.parent = gameObject.transform;
+    public void DisplayZone() {
+        BombZone bomb = Instantiate(zone, transform.position, transform.rotation);
+
+        Renderer rendererZ = bomb.GetComponent<Renderer>();
+        Color bombZoneColor = bombColor;
+        bombZoneColor.a = 0.25f;
+        rendererZ.material.SetColor("_TintColor", bombZoneColor);
+
+        bomb.transform.parent = gameObject.transform;
 		bomb.transform.localScale = Vector3.one * (expRadius * 2);
 		isZoned = true;
 	}
