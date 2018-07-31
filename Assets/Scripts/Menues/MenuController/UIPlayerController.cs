@@ -59,16 +59,33 @@ public class UIPlayerController : MonoBehaviour {
 
 			if (controller.Direction.WasPressed && directionReady) {
 				TwoAxisInputControl zzz = controller.Direction;
-				if (zzz.Down.IsPressed)
-					connectedCanvas.down = true;
-				if (zzz.Up.IsPressed)
-					connectedCanvas.up = true;
-				if (zzz.Left.IsPressed)
-					connectedCanvas.left = true;
-				if (zzz.Right.IsPressed)
-					connectedCanvas.right = true;
-				StartCoroutine ("DirectionWait");
-			}
+
+                //Conversion de l'angle du stick en direction Haut Droite Bas Gauche
+                int angle = Mathf.RoundToInt(zzz.Angle);
+
+                if (angle > 315 || angle <= 45)
+                {
+                    //Debug.Log("1");
+                    connectedCanvas.up = true;
+                }
+                else if (angle > 45 && angle <= 135)
+                {
+                    //Debug.Log("2");
+                    connectedCanvas.left = true;
+                }
+                else if (angle > 135 && angle <= 215)
+                {
+                    //Debug.Log("3");
+                    connectedCanvas.down = true;
+                }
+                else if (angle > 215 && angle <= 315)
+                {
+                    //Debug.Log("4");
+                    connectedCanvas.right = true;
+                }
+                StartCoroutine("DirectionWait");
+            }
+
 		}
 		// FIN DU IF CONTROLLER != NULL
 	}

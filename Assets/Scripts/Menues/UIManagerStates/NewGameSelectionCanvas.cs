@@ -118,15 +118,18 @@ public class NewGameSelectionCanvas : UIControllableCanvas {
 		case SelectionState.GameMode:
 			gameModeTextButton.color = Color.cyan;
 			levelTextButton.color = Color.white;
+            startTextButton.color = Color.white;
 			break;
 		case SelectionState.Level:
 			levelTextButton.color = Color.cyan;
 			gameModeTextButton.color = Color.white;
-			break;
+            startTextButton.color = Color.white;
+                break;
 		case SelectionState.Start:
 			levelTextButton.color = Color.white;
 			gameModeTextButton.color = Color.white;
-			break;
+            startTextButton.color = Color.red;
+                break;
 		}
 	}
 
