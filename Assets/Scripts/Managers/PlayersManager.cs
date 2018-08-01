@@ -26,6 +26,7 @@ public class PlayersManager : MonoBehaviour {
 
 	public PlayerConfig[] playersConfig;
 
+    //Initialise par CharactersInitialisation
     public Character[] charactersPlayedNow;
 
 	void Awake (){
