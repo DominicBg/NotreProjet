@@ -64,7 +64,7 @@ public class BombLauncher : Weapon {
             bombCard = AssetDatabase.LoadAssetAtPath(assetPath, typeof(BombCard)) as BombCard;
         }
 
-        Debug.Log("WEAPON BOMB CARD" + bombCard.name);
+        //Debug.Log("WEAPON BOMB CARD" + bombCard.name);
         usedBomb = (Bomb)Resources.Load("Prefabs/Bomb", typeof(Bomb));
         
     }

@@ -69,7 +69,7 @@ public class PlayersManagerEditor : Editor {
 	}
 
 	void SelectController(){
-		Debug.Log ("ZZZ");
+		Debug.Log ("Empty methods Select Controller from PlayersManagerEditor");
 
 		/*
 		devicesList = new string[InputManager.Devices.Count];

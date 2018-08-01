@@ -20,15 +20,14 @@ public class TriggerZone : MonoBehaviour {
 	[SerializeField]private bool[] charactersIn;
 
 	public void Initialize (){
-
-		//A REFAIRE POUR QUE ÇA FONCTIONNE A PLUSIEURS
-		/*
-		inGamePlayers = GameManager.gameManager.playersManager.players;
+        
+		inGamePlayers = GameManager.gameManager.playersManager.charactersPlayedNow;
 		charactersIn = new bool[inGamePlayers.Length];
 		for(int i = 0; i < charactersIn.Length; i ++){
 			charactersIn[i] = false;
+            Debug.Log("Trigger zone : "+ this + " found " + inGamePlayers[i].characterName);
 		} 
-		*/
+		
 	}
 
 	void OnTriggerEnter(Collider other){
@@ -53,7 +52,7 @@ public class TriggerZone : MonoBehaviour {
 
 			//A REFAIRE POUR QUE ÇA FONCTIONNE A PLUSIEURS
 
-			/*
+			
 		case PlayersNum.AllPlayers:
 			//S'active si il n'est pas deja active
 			PlayableCharacter charEntering2 = other.GetComponent<PlayableCharacter> ();
@@ -75,7 +74,7 @@ public class TriggerZone : MonoBehaviour {
 				//Si il n'est pas deja active
 			}
 			break;
-			*/	
+			
 
 		} // FIN DU SWITCH
 
