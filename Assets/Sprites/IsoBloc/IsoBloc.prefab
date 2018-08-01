@@ -55,7 +55,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4298051123131348}
   m_Layer: 0
-  m_Name: IsoBloc3
+  m_Name: IsoBloc
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -144,6 +144,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 5181aa6e6c667424eb2aff9044f1bedf, type: 2}
   m_StaticBatchInfo:
@@ -178,6 +179,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 4294967295
   m_Materials:
   - {fileID: 2100000, guid: 147d38b9bf6a09243a102c0f8f0b4c2e, type: 2}
   m_StaticBatchInfo:
