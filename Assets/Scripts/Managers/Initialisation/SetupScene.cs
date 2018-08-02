@@ -92,9 +92,9 @@ public class SetupScene : MonoBehaviour{
 
 	public void InitializeCamera(){
 
-        Debug.Log("CameraInitialization From :" + this);
+        //Debug.Log("CameraInitialization From :" + this);
 
-		CameraFollowing cam = (CameraFollowing)GameObject.FindObjectOfType (typeof(CameraFollowing));
+        CameraFollowing cam = (CameraFollowing)GameObject.FindObjectOfType (typeof(CameraFollowing));
 		cam.m_Targets = new Transform[gameManager.playersManager.charactersPlayedNow.Length];
 
 		for (int i = 0; i < cam.m_Targets.Length; i++) {

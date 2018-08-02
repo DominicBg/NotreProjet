@@ -25,7 +25,7 @@ public class TriggerZone : MonoBehaviour {
 		charactersIn = new bool[inGamePlayers.Length];
 		for(int i = 0; i < charactersIn.Length; i ++){
 			charactersIn[i] = false;
-            Debug.Log("Trigger zone : "+ this + " found " + inGamePlayers[i].characterName);
+            //Debug.Log("Trigger zone : "+ this + " found " + inGamePlayers[i].characterName);
 		} 
 		
 	}

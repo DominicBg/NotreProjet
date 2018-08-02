@@ -17,6 +17,7 @@ public class UIState : MonoBehaviour {
 	//Methodes pareilles pour tout les etats du UI
 	public void SetCanvasActive(){
 		gameObject.SetActive (true);
+        Debug.Log(gameObject.name + " SET ACTIV");
 	}
 
 	public void SetCanvasInactive(){

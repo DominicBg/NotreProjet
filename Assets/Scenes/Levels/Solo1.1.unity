@@ -4366,7 +4366,7 @@ Prefab:
     - target: {fileID: 114375391475308480, guid: 8437d0538a3c8934ea0d5bb7e52696b2,
         type: 2}
       propertyPath: launchingFrom
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114750238036044636, guid: 8437d0538a3c8934ea0d5bb7e52696b2,
         type: 2}
@@ -5995,8 +5995,7 @@ Prefab:
     - target: {fileID: 1078451698483418, guid: 054017049acf43148b1d1a190f877c7e, type: 2}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000,
-        type: 0}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 054017049acf43148b1d1a190f877c7e, type: 2}
   m_IsPrefabParent: 0
@@ -14063,8 +14062,7 @@ Prefab:
     - target: {fileID: 1078451698483418, guid: 054017049acf43148b1d1a190f877c7e, type: 2}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000,
-        type: 0}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 054017049acf43148b1d1a190f877c7e, type: 2}
   m_IsPrefabParent: 0
@@ -15284,8 +15282,7 @@ Prefab:
     - target: {fileID: 1078451698483418, guid: 054017049acf43148b1d1a190f877c7e, type: 2}
       propertyPath: m_Icon
       value: 
-      objectReference: {fileID: -5442936267250999957, guid: 0000000000000000d000000000000000,
-        type: 0}
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 054017049acf43148b1d1a190f877c7e, type: 2}
   m_IsPrefabParent: 0
@@ -30631,7 +30628,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1016584871277662, guid: ec86909e8349e8442a34145f5a440700, type: 2}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ec86909e8349e8442a34145f5a440700, type: 2}
