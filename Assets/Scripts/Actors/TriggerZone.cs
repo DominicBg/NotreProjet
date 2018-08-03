@@ -17,7 +17,7 @@ public class TriggerZone : MonoBehaviour {
 
 	public GameObject[] activables;
 
-	[SerializeField]private bool[] charactersIn;
+	public bool[] charactersIn;
 
 	public void Initialize (){
         
@@ -37,8 +37,16 @@ public class TriggerZone : MonoBehaviour {
 		switch (playersNumberActivation) {
 		case PlayersNum.OnePlayer:
 			//S'active si il n'est pas deja active
-			PlayableCharacter charEntering = other.GetComponent<PlayableCharacter> ();
+			Character charEntering = other.GetComponent<Character> ();
 			if (charEntering != null) {
+                for (int i = 0; i < charactersIn.Length; i++)
+                {
+                        if ( charEntering == inGamePlayers[i])
+                        {
+                            Debug.Log("CHAR NUMBER : " + i);
+                            charactersIn[i] = true;
+                        }
+                }
 
 				//Si il n'est pas deja active
 				if (!activated) {

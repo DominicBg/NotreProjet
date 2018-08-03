@@ -40,8 +40,14 @@ public class TeleportZone : TriggerZone {
 
 				//Deplacer chaque joueur sur le nouveau spawnPoint
 				for (int i = 0; i < inGamePlayers.Length; i++) {
-					inGamePlayers [i].transform.position = teleportationZone.transform.position;
-				}
+
+                    //Teleporter uniquement le personnage present
+                    if (charactersIn[i])
+                    {
+                        inGamePlayers[i].transform.position = teleportationZone.transform.position;
+                    }
+
+                }
 			} else {
 				Debug.Log ("Pas de Teleporteur relie");
 			}
