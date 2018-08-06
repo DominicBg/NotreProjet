@@ -18,6 +18,9 @@ public interface IActivable
 {
 	void Activate ();
 	void Deactivate();
+
+    void Activate(Character[] charToDo);
+    void Deactivate(Character[] charToDo);
 }
 
 public interface IDamageable

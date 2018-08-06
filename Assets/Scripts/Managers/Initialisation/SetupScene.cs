@@ -123,13 +123,26 @@ public class SetupScene : MonoBehaviour{
 	}
 
 	void InitializeTriggerZones(){
-		TriggerZone[] triggers = Object.FindObjectsOfType<TriggerZone>();
-		foreach(TriggerZone trig in triggers){
+		TriggerBase[] triggersBase = Object.FindObjectsOfType<TriggerBase>();
+		foreach(TriggerBase trig in triggersBase){
 			trig.Initialize();
 		}
-	}
+        TriggerZone[] triggersZone = Object.FindObjectsOfType<TriggerZone>();
+        foreach (TriggerBase trig in triggersZone)
+        {
+            trig.Initialize();
+        }
+        TriggerBomb[] triggersBomb = Object.FindObjectsOfType<TriggerBomb>();
+        foreach (TriggerBase trig in triggersBomb)
+        {
+            trig.Initialize();
+        }
 
-	void SetupSceneFinished(){
+
+
+    }
+
+    void SetupSceneFinished(){
 		gameManager.PlayLevel ();
 	}
 

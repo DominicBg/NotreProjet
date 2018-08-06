@@ -91,7 +91,8 @@ public class Bomb : MonoBehaviour {
 			if (explosable != null) {				
 				Rigidbody rb = hit.GetComponent<Rigidbody> ();
 				rb.AddExplosionForce (expForce, posExplosion, 12f, 10f);
-				//Debug.Log ("EXPLOSABLE");
+                //Debug.Log ("EXPLOSABLE");
+                explosable.Explode(Vector3.zero);
 			}
 		}
 

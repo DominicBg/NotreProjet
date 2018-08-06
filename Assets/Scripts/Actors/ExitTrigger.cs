@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ExitTrigger : TriggerZone {
+public class ExitTrigger : Activable {
 
 
 	public override void Activate(){

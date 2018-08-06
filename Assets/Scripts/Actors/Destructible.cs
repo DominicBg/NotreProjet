@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Destructible : MonoBehaviour, IActivable {
+public class Destructible : Activable {
 
-	public void Activate(){
+	public override void Activate(){
 		gameObject.SetActive (false);
 	}
 
-	public void Deactivate(){
+	public override void Deactivate(){
 		
 	}
 }

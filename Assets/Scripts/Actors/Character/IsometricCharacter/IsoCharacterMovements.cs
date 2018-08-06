@@ -256,9 +256,9 @@ public class IsoCharacterMovements : Character {
             }
         }
         else if (!isGrounded)
-        {
+        {            
             //Voir si personnage atterit au sol
-            if (rb.velocity.y < 0)
+            if (rb.velocity.y < -0.001f)
             {
                 //Prediction de la position en Y a la prochaine frame
                 //Faire la meme chose pour checker on WALLS
@@ -268,9 +268,24 @@ public class IsoCharacterMovements : Character {
                     SetOnGround(hitInfo.point);
                 }
             }
+            //Si le personnage n'est pas "OnGround" mais ne descend pas ou peu
+            //Situation ou le perso est stuck on edge
+            else if (rb.velocity.y == 0f)
+            {
+                if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 0.1f))
+                {
+                    Debug.Log("Colle au sol");
+                    SetOnGround();
+                }
+            }
+            else if (rb.velocity.y >= -0.001f && rb.velocity.y <= 0f)
+            {
+                Debug.Log("Stuck avec Y plus petit que zero");
+                SetOnGround();
+            }
         }
 
-        #if UNITY_EDITOR
+#if UNITY_EDITOR
         Debug.DrawLine(transform.position, transform.position + (Vector3.down * groundCheckDistance), Color.black);
         #endif
     }
@@ -335,13 +350,15 @@ public class IsoCharacterMovements : Character {
 		case CharacterState.Running:
 			animator.SetTrigger ("Run");
 			break;
-		case CharacterState.Jumping:
+        case CharacterState.Braking:
+            animator.SetTrigger("Idle");
+            break;
+            case CharacterState.Jumping:
 			animator.SetTrigger ("Jump");
 			break;
 		case CharacterState.Falling:
 			//animator.SetTrigger ("Falling");
-			break;
-		
+			break;		
 		}
 	}
 

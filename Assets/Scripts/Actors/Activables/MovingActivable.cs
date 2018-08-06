@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingActivable : MonoBehaviour, IActivable {
+public class MovingActivable : Activable {
 
 
 	private enum Etat{AttenteAller, Aller, AttenteRetour, Retour};
@@ -19,9 +19,7 @@ public class MovingActivable : MonoBehaviour, IActivable {
 
 	public enum DesactivationEffect{BackToStartPosition, StopHereAndWait, GoToLastPosition}
 	public DesactivationEffect desactivationEffect;
-
-
-	public bool activated;
+    
 	private Vector3 positionStart;
 	public Vector3 offset;
 	private Vector3 positionCible;
@@ -132,10 +130,7 @@ public class MovingActivable : MonoBehaviour, IActivable {
 		}
 	}
 
-
-
-
-	public void Activate() {
+	public override void Activate() {
 		if (etatActuel == Etat.AttenteAller) {
 			activated = true;
 		}
@@ -144,7 +139,7 @@ public class MovingActivable : MonoBehaviour, IActivable {
 		}
 	}
 
-	public void Deactivate(){
+	public override void Deactivate(){
 		switch (desactivationEffect) {
 		case DesactivationEffect.BackToStartPosition:
 			StartReturning ();

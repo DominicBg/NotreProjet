@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//SUPPRIMER CETTE CLASS
 public class Bombrupteur : Activable {
 
 	// Use this for initialization
@@ -13,4 +14,6 @@ public class Bombrupteur : Activable {
 	void Update () {
 		
 	}
+
+
 }

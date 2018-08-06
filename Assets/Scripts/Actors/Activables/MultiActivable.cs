@@ -2,8 +2,12 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MultiActivable : MonoBehaviour, IActivable {
 
+
+public class MultiActivable : TriggerBase {
+
+    /*
+    
 	public bool activated;
 
 	public GameObject[] activateurs;
@@ -64,19 +68,6 @@ public class MultiActivable : MonoBehaviour, IActivable {
 
 	public void CheckForAllActivateds(){
 
-		/*
-		int activatedsNow = 0;
-
-		foreach (bool maybeActivated in activateds) {
-			if (maybeActivated == true)
-				activatedsNow++;		
-		}
-
-		if (activatedsNow == activateds.Length) {
-			ActiveActivables ();
-		}
-		*/
-
 
 		bool allActivated = true;
 		for (int i = 0; i < activateds.Length; i++) {
@@ -84,12 +75,11 @@ public class MultiActivable : MonoBehaviour, IActivable {
 		} 
 		if (allActivated) ActiveActivables ();	
 
-
-
+        
 
 	}
 
-	public void ActiveActivables(){
+	public void ActiveActivablesZZZ(){
 		activated = true;
 		foreach (GameObject zzz in activables) {
 			IActivable acti = zzz.GetComponent<IActivable> ();
@@ -109,6 +99,6 @@ public class MultiActivable : MonoBehaviour, IActivable {
 
 	}
 
-
+    */
 
 }

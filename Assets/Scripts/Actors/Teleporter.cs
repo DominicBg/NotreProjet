@@ -2,18 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TeleportZone : TriggerZone {
+
+
+public class Teleporter : Activable {
 
 	//public TeleportPoint[] teleportPoints;
 
-	public TeleportZone teleportationZone;
+	public Teleporter teleportationZone;
 
 	public bool isTeleportedIn = false;
 
-
-
-
-	public override void Activate(){
+	public override void Activate(Character[] charToTeleport){
 		activated = true;
 
 		Debug.Log ("TELEPORT - ZONE CHANGING");
@@ -33,22 +32,31 @@ public class TeleportZone : TriggerZone {
 		*/
 
 		if (!isTeleportedIn) { //Si les joueurs ne viennent pas d'etre TP a ce point		
-			if (teleportationZone != null) {
+
+            if (teleportationZone != null) {
 
 				//Pour que les joueurs ne soient pas reteleportes directement 
 				teleportationZone.isTeleportedIn = true;
 
-				//Deplacer chaque joueur sur le nouveau spawnPoint
-				for (int i = 0; i < inGamePlayers.Length; i++) {
-
+                //Teleporter le ou les personnages de la liste
+                foreach (Character character in charToTeleport) {
+                    character.transform.position = teleportationZone.transform.position;
+                }
+                
+                /* Ancienne facon de deplacer les persos
+                //Deplacer chaque joueur sur le nouveau spawnPoint
+                for (int i = 0; i < inGamePlayers.Length; i++) {
                     //Teleporter uniquement le personnage present
                     if (charactersIn[i])
                     {
                         inGamePlayers[i].transform.position = teleportationZone.transform.position;
                     }
-
                 }
-			} else {
+                */
+
+			}
+            else
+            {
 				Debug.Log ("Pas de Teleporteur relie");
 			}
 		}
