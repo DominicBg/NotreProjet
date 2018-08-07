@@ -13,5 +13,5 @@ public class TriggerBomb : TriggerBase, IExplosable {
         TriggerActivables();
     }
 
-
+    //TIMER - Pendant combien de temps reste-t-il TRIGGERED
 }

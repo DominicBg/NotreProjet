@@ -4,16 +4,97 @@ using UnityEngine;
 
 
 
-public class MultiActivable : TriggerBase {
+public class MultiActivable : Activable {
+
+    //Nouveau
+    TriggerBase triggerPart;
+
+    //Tableau des triggers relies 
+    public List<TriggerBase> linkedTriggersList;
+    public bool[] triggeredTriggers;
+
+
+
+    void Start()
+    {
+        GetLinkedTriggers();
+        triggerPart = GetComponent<TriggerBase>();
+    }
+
+
+
+
+
+    //Actualiser le tableau des elements relies
+    //Aller chercher les triggers qui ont la partie "Activable" de cet objet
+    //Pouvoir le faire dans l'editeur et en jeu
+    void GetLinkedTriggers()
+    {
+        linkedTriggersList = new List<TriggerBase>();
+
+        //Aller chercher les triggers
+        TriggerBase[] linkedTriggers = FindObjectsOfType<TriggerBase>();
+        Debug.Log(this + " linked Triggers : " + linkedTriggers.Length); 
+
+        //Parcourir les triggers
+        for(int i = 0; i < linkedTriggers.Length; i++)
+        {
+            Debug.Log("Trigger " + i + " " + linkedTriggers[i].name);            
+            
+            //Regarder ce qu'ils visent
+            for (int j = 0; j < linkedTriggers[i].objectsToActive.Length; j ++)
+            {
+                Debug.Log("---- " + i + " Objet lie : " + linkedTriggers[i].objectsToActive[j].name);
+
+                //Si ils visent cet activateur
+                if (this.gameObject == linkedTriggers[i].objectsToActive[j])
+                {
+                    Debug.Log("SAME OBJECT");
+                    linkedTriggersList.Add(linkedTriggers[i]);
+                }
+            }
+        }
+    }
+
+    //Quand un des triggers s'active
+    public override void Activate()
+    {
+        bool allTriggered = true;
+        //Checker si tout les objets sont actives
+        for(int i = 0; i < linkedTriggersList.Count; i++)
+        {
+            Debug.Log("DIS " + linkedTriggersList[i] +" "+ linkedTriggersList[i].triggered);
+            
+            //Retenir si un des trigger n'est pas TRIGGERED
+            if (!linkedTriggersList[i].triggered)
+            {
+                allTriggered = false;
+            }
+        }
+
+        //Si tout est actif
+        if (allTriggered)
+        {
+            triggerPart.TriggerActivables();
+        }
+
+
+    }
+
+
+
+
+
+
+
 
     /*
-    
-	public bool activated;
 
+    // VIEUX CODE
+    public bool activated;
 	public GameObject[] activateurs;
 	public bool[] activateds;
 	public GameObject[] activables;
-
 	public float activationTimer;
 
 	// Use this for initialization
@@ -99,6 +180,6 @@ public class MultiActivable : TriggerBase {
 
 	}
 
+    
     */
-
 }

@@ -122,6 +122,7 @@ public class SetupScene : MonoBehaviour{
 		gamemodeIsLoaded = true;
 	}
 
+
 	void InitializeTriggerZones(){
 		TriggerBase[] triggersBase = Object.FindObjectsOfType<TriggerBase>();
 		foreach(TriggerBase trig in triggersBase){
@@ -137,9 +138,6 @@ public class SetupScene : MonoBehaviour{
         {
             trig.Initialize();
         }
-
-
-
     }
 
     void SetupSceneFinished(){
