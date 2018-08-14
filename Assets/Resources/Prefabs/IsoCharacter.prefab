@@ -182,7 +182,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1621691242447584}
   m_LocalRotation: {x: 0.23911765, y: -0.3696438, z: 0.09904577, w: 0.89239913}
-  m_LocalPosition: {x: -0.211, y: 1.388, z: 0}
+  m_LocalPosition: {x: 0.25, y: 1.388, z: -0.25}
   m_LocalScale: {x: 5, y: 5, z: 1}
   m_Children: []
   m_Father: {fileID: 4461225543679884}
@@ -208,7 +208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035681546721126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 22.506374, y: 5, z: -46.52888}
+  m_LocalPosition: {x: 190.5, y: 1.8000002, z: -45.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4028472589387886}
@@ -436,7 +436,7 @@ Animator:
   m_GameObject: {fileID: 1621691242447584}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d1c3462dfdbfe4b4488a16554033ecb2, type: 2}
+  m_Controller: {fileID: 9100000, guid: bc81a7d6b015d5448acfcb56a11f1bff, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -462,11 +462,13 @@ MonoBehaviour:
   rb: {fileID: 0}
   characterCard: {fileID: 11400000, guid: b242414eccde9854fa6ad71544ac3e84, type: 2}
   characterName: 
+  dead: 0
   runningSpeedAct: 0
   runningSpeedMax: 3000
   runningSpeedAcceleration: 150
   velocityMagnetudeMax: 4
   runningBrake: 500
+  airMoveVelocityMagnetudeMax: 7
   jumpPower: 10
   gravityMultiplier: 5.1
   groundCheckDistance: 0.1

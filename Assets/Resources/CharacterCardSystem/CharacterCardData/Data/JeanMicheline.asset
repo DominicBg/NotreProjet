@@ -17,5 +17,5 @@ MonoBehaviour:
     type: 2}
   characterBomb: {fileID: 0}
   characterBombCard: {fileID: 11400000, guid: 7c8ec8a7bd59ef242bed6aae377e71f6, type: 2}
-  runningSpeed: 4
+  runningSpeed: 7
   jumpHeight: 0.1
