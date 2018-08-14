@@ -8,19 +8,36 @@ public class TriggerBase : MonoBehaviour {
     public GameObject[] objectsToActive;
     public IActivable[] activables;
 
+    public bool delayTriggering;
+    public float delayTime;
+
+    public bool delayPassed;
+
     public virtual void Initialize()
     {
-        IActivable[] temp = new IActivable[objectsToActive.Length];
-        for(int i = 0; i < temp.Length; i++)
+        Debug.Log(this + " Initailisation");
+        //Si il y a des objets dans le tableau
+        if(objectsToActive != null)
         {
-            IActivable tempz = objectsToActive[i].GetComponent<IActivable>();
-            if (tempz != null)
+            IActivable[] temp = new IActivable[objectsToActive.Length];
+            for (int i = 0; i < temp.Length; i++)
             {
-                temp[i] = tempz;
-                Debug.Log("OBJET AJOUTE : " + tempz);
+                IActivable tempz = objectsToActive[i].GetComponent<IActivable>();
+                if (tempz != null)
+                {
+                    temp[i] = tempz;
+                    Debug.Log("OBJET AJOUTE : " + tempz);
+                }
             }
+            activables = temp;
+        } else if (objectsToActive == null || objectsToActive.Length == 0)
+        {
+            Debug.Log(this + " Tableau d'objet a activer vide!");
         }
-        activables = temp;
+
+
+
+
     }
 
     public virtual void TriggerActivables()
@@ -64,4 +81,9 @@ public class TriggerBase : MonoBehaviour {
             zzz.Deactivate(charTriggered);
         }
     }
+
+
+
+
+
 }
