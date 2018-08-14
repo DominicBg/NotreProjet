@@ -5,8 +5,6 @@ using UnityEngine.UI;
 
 public class InGameUI : MonoBehaviour {
 
-
-
 	RawImage fadeImage;
 	public bool isFading;
 
