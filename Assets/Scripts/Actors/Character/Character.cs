@@ -15,6 +15,8 @@ public class Character : MonoBehaviour, IDamageable, IExplosable {
 
     public string characterName;
 
+    public bool dead;
+
 
 	// Use this for initialization
 	public virtual void Start () {

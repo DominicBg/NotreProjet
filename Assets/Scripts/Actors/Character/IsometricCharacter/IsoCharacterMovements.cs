@@ -368,16 +368,61 @@ public class IsoCharacterMovements : Character {
 
         angle += 45;
 
-		if (angle > -45 && angle < 45) {
-			directionAnim = 0;
-		} else if (angle < -45 && angle > -135) {
-			directionAnim = 1;
-		} else if (angle < -135 || angle > 135) {
-			directionAnim = 2;
-		}else if (angle > 45 && angle < 135) {
-			directionAnim = 3;
-		}
 
-	}
+        if (angle > -22.5 && angle < 22.5)
+        {
+            directionAnim = 0; //Droite
+        }
+        else if (angle > 22.5 && angle < 67.5)
+        {
+            directionAnim = 7;
+        }
+        else if (angle > 67.5 && angle < 112.5)
+        {
+            directionAnim = 6; //Haut
+        }
+        else if (angle > 112.5 && angle < 157.5)
+        {
+            directionAnim = 5;
+        }
+        else if (angle > 157.5 || angle < -157.5)
+        {
+            directionAnim = 4; // Gauche
+        }
+        else if (angle > -157.5 && angle < -112.5)
+        {
+            directionAnim = 3;
+        }
+        else if (angle > -112.5 && angle < -67.5)
+        {
+            directionAnim = 2; //Bas
+        }
+        else if (angle > -67.5 && angle < -22.5)
+        {
+            directionAnim = 1;
+        }
+
+        Debug.Log(directionAnim);
+
+
+        /* ANCIEN
+        if (angle > -45 && angle < 45)
+        {
+            directionAnim = 0;
+        }
+        else if (angle < -45 && angle > -135)
+        {
+            directionAnim = 1;
+        }
+        else if (angle < -135 || angle > 135)
+        {
+            directionAnim = 2;
+        }
+        else if (angle > 45 && angle < 135)
+        {
+            directionAnim = 3;
+        }
+        */
+    }
 
 }
