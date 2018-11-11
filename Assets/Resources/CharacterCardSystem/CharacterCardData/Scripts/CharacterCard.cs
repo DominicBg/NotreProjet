@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+[System.Serializable]
 [CreateAssetMenu(fileName = "New Character Card", menuName = "Character Card System/Character Card")]
 public class CharacterCard : ScriptableObject {
 
