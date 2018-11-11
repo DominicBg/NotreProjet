@@ -11,30 +11,40 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GUI/EndMenu.unity
     guid: 1ad60f25acd989f4ba41bcc97b53950f
-  - enabled: 1
-    path: Assets/Scenes/Levels/Arena1.1.unity
-    guid: ac89748dbec62f34ea9c953b22d4bb5b
-  - enabled: 1
-    path: Assets/Scenes/Levels/Arena2.1.unity
-    guid: d2ea6ea1f6e36d442b3cb6c02cbe5101
-  - enabled: 1
-    path: Assets/Scenes/Levels/Coop1.1.unity
-    guid: 4cbb2b3673b93e24eae90ffe47d9d11a
-  - enabled: 1
-    path: Assets/Scenes/Levels/Coop1.2.unity
-    guid: 8822993b64c849a4d88a35fc41817205
-  - enabled: 1
-    path: Assets/Scenes/Levels/Solo1.1.unity
-    guid: 8d2f4dae8bad43f40b91a06c8f1aedc0
-  - enabled: 1
-    path: Assets/Scenes/Levels/Solo1.2.unity
-    guid: 5c187f0c666e3b944b1449fcc8a2804c
-  - enabled: 1
-    path: Assets/Scenes/Levels/TeamArena.unity
-    guid: ad7fb864033088646bc1ee3e8368b04b
-  - enabled: 1
-    path: Assets/Scenes/Levels/PlateformerCoop1.unity
-    guid: e92e648eda357f24b81d488d3bbe1047
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/Scenes/GUI/MainMenuInControl.unity
     guid: 235edb92b3c2dd44290c6b35f8383de0
+  - enabled: 1
+    path: Assets/Scenes/Levels/Le Train de Plastique.unity
+    guid: ea25d752cd5c0e048bb9636f3728530a
+  - enabled: 1
+    path: Assets/Scenes/Levels/Gym Adventure.unity
+    guid: e44c01e6508c4194db1e888f324cf152
+  - enabled: 1
+    path: Assets/Scenes/Levels/LeTrainDePlastique.unity
+    guid: 40e45160ebac7994cbd9737b863e1fb6
+  m_configObjects: {}
