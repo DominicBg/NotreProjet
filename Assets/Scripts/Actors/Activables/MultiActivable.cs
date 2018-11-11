@@ -34,22 +34,22 @@ public class MultiActivable : Activable {
 
         //Aller chercher les triggers
         TriggerBase[] linkedTriggers = FindObjectsOfType<TriggerBase>();
-        Debug.Log(this +" From " + this.transform.parent +" linked Triggers : " + linkedTriggers.Length); 
+        //Debug.Log(this +" From " + this.transform.parent +" linked Triggers : " + linkedTriggers.Length); 
 
         //Parcourir les triggers
         for(int i = 0; i < linkedTriggers.Length; i++)
         {
-            Debug.Log("Trigger " + i + " " + linkedTriggers[i].name + " From " + linkedTriggers[i].transform.parent);            
+            //Debug.Log("Trigger " + i + " " + linkedTriggers[i].name + " From " + linkedTriggers[i].transform.parent);            
             
             //Regarder ce qu'ils visent
             for (int j = 0; j < linkedTriggers[i].objectsToActive.Length; j ++)
             {
-                Debug.Log("---- " + i + " Linked to Activable : " + linkedTriggers[i].objectsToActive[j].name + " From " + linkedTriggers[i].objectsToActive[j].transform.parent);
+                //Debug.Log("---- " + i + " Linked to Activable : " + linkedTriggers[i].objectsToActive[j].name + " From " + linkedTriggers[i].objectsToActive[j].transform.parent);
 
                 //Si ils visent cet activateur
                 if (this.gameObject == linkedTriggers[i].objectsToActive[j])
                 {
-                    Debug.Log("SAME OBJECT");
+                    //Debug.Log("SAME OBJECT");
                     linkedTriggersList.Add(linkedTriggers[i]);
                 }
             }

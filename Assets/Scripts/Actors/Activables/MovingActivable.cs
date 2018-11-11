@@ -32,8 +32,8 @@ public class MovingActivable : Activable {
 
 	// Use this for initialization
 	void Start () {
-		positionStart = movingObject.transform.position;
-		positionCible = movingObject.transform.position + offset;
+		positionStart = movingObject.transform.localPosition;
+		positionCible = movingObject.transform.localPosition + offset;
 		etatActuel = Etat.AttenteAller;
 	}
 
@@ -107,9 +107,9 @@ public class MovingActivable : Activable {
 
 
 	public void DeplacementAller(){
-		if (movingObject.transform.position != positionCible) {
+		if (movingObject.transform.localPosition != positionCible) {
 			//float step = speed * Time.deltaTime;
-			movingObject.transform.position = Vector3.MoveTowards (movingObject.transform.position, positionCible, speed);
+			movingObject.transform.localPosition = Vector3.MoveTowards (movingObject.transform.localPosition, positionCible, speed);
 		} else {			
 			etatActuel = Etat.AttenteRetour;
 		}
@@ -122,9 +122,9 @@ public class MovingActivable : Activable {
 	}
 
 	public void DeplacementRetour(){
-		if (movingObject.transform.position != positionStart) {
+		if (movingObject.transform.localPosition != positionStart) {
 			//float step = speedReturn * Time.deltaTime;
-			movingObject.transform.position = Vector3.MoveTowards (movingObject.transform.position, positionStart, speedReturn);
+			movingObject.transform.localPosition = Vector3.MoveTowards (movingObject.transform.localPosition, positionStart, speedReturn);
 		} else {
 			etatActuel = Etat.AttenteAller;
 		}

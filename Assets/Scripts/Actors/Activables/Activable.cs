@@ -26,7 +26,7 @@ public class Activable : MonoBehaviour, IActivable {
 
     public virtual void Activate(Character[] applyToTheseCharacters)
     {
-        //Declancer les elements qui s'activent sans la liste de char
+        //Declancher les elements qui s'activent sans la liste de char
         Activate();
     }
 
