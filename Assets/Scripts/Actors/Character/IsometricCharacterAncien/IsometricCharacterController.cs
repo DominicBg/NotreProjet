@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+//SUPPRIMER CE CODE 
 [RequireComponent(typeof(IsometricCharacter))]
 public class IsometricCharacterController : CharController {
 
@@ -31,8 +31,10 @@ public class IsometricCharacterController : CharController {
 
 	// Use this for initialization
 	void Start () {
-		//Character
-		character = GetComponent<IsometricCharacter> ();
+        Debug.Log("CODE A SUPPRIMER");
+
+        //Character
+        character = GetComponent<IsometricCharacter> ();
 
 		//Weapon
 		bombLauncher = GetComponentInChildren<BombLauncher> ();
@@ -42,14 +44,14 @@ public class IsometricCharacterController : CharController {
 
 	// Update is called once per frame
 	void Update () {
-		//Get buttons saut
-//		jump = Input.GetButton (boutonA);
+        //Get buttons saut
+        //		jump = Input.GetButton (boutonA);
 
-		//Input for Weapon
-		//shoot = Input.GetButton ("ButB0");
-		//place = Input.GetButton ("ButX0");
+        //Input for Weapon
+        //shoot = Input.GetButton ("ButB0");
+        //place = Input.GetButton ("ButX0");
 
-
+        Debug.Log("CODE A SUPPRIMER");
 
 	}
 

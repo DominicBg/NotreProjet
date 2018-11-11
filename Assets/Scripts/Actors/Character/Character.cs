@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
+[System.Serializable]
 public class Character : MonoBehaviour, IDamageable, IExplosable {
 
 	public int health;
@@ -16,6 +17,8 @@ public class Character : MonoBehaviour, IDamageable, IExplosable {
     public string characterName;
 
     public bool dead;
+
+    public Vector3 respawnPlace;
 
 
 	// Use this for initialization
@@ -40,15 +43,37 @@ public class Character : MonoBehaviour, IDamageable, IExplosable {
                 charMovement.jumpPower = characterCard.jumpHeight * 150f;
             }
         }
-        
-
     }
 
 	public virtual void Damage(int damageValue){
 		health = 0;
 	}
 
-	public void Explode(Vector3 posExplosion){
-		
-	}
+	public virtual void Explode(float expForce, Vector3 posExplosion){
+        rb.velocity = Vector3.zero;
+
+        IEnumerator coroutine = PauseOnExplosion(expForce, posExplosion);
+
+        StartCoroutine(coroutine);
+    }
+
+    IEnumerator PauseOnExplosion(float expForce, Vector3 posExplosion)
+    {       
+        yield return new WaitForSeconds(0.1f);
+
+        rb.AddExplosionForce(expForce, posExplosion, 12f, 10f);
+    }
+
+    public virtual void Respawn()
+    {
+        rb.velocity = Vector3.down;
+        if( respawnPlace != null)
+        {
+            transform.position = respawnPlace;
+        }
+        else
+        {
+            Debug.Log("No Respawn place in : " + this.name);
+        }
+    }
 }

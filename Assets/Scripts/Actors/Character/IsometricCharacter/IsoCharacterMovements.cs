@@ -20,7 +20,6 @@ public class IsoCharacterMovements : Character {
 	public float jumpPower = 360;
 	[Range(1f, 100f)][SerializeField] float gravityMultiplier = 2f;
 	[SerializeField] float groundCheckDistance = 100f;
-
 	//Animator animator;
 	public CapsuleCollider capsule;
 
@@ -35,12 +34,17 @@ public class IsoCharacterMovements : Character {
 	Vector3 wallNormal;
 	Vector3 wallDecalage;
 
-	//public float directionAngle;
-	//public float characterDirection;
-
+    public float ledgeCheckDistance = 1f;
+    public float ledgeClimbingSpeed = 1f;
+    public bool isOnLedge;
+    public bool canClimbLedge;
+    public float canClimbTime;
 	Animator animator;
 
-	Vector3 lastMoveDirection;
+    public bool jumpButtonReleased;
+    Vector3 lastMoveDirection;
+    public GameObject lastLedgeGrabbedObject;
+
 	//A METTRE DANS UNE AUTRE CLASSE PLUS TARD
 	public int playerNumber;
 
@@ -52,8 +56,10 @@ public class IsoCharacterMovements : Character {
 		Running,
 		Jumping,
 		Falling,
+        LedgeGrabbing,
 	}
 	public CharacterState charState;
+    CharacterState lastCharState;
 
 
 	public int directionAnim;
@@ -99,15 +105,22 @@ public class IsoCharacterMovements : Character {
 
 
     //Methode appelee au Fixed Update par IsometricCharacterController
-    public void Move(Vector2 move, bool jump){
+    public void Move(Vector2 move, bool jump, bool cancel){
 
         ActualizeLastMoveDirection(move);
 
         if (isGrounded) {	
 			HandleGroundedMovement (move, jump);
 		} else {
-			HandleAirborneMovement (move);
-		}
+            if (isOnLedge)
+            {
+                HandleLedgedMovement(jump, cancel);
+            }
+            else
+            {
+                HandleAirborneMovement(move);
+            }
+        }
     }
 
     void ActualizeLastMoveDirection (Vector2 move){
@@ -123,7 +136,6 @@ public class IsoCharacterMovements : Character {
         {
             runningSpeedAct += runningSpeedAcceleration;
         }
-
 
         //Si on est pas a la vitesse maximum				
         Vector2 horizontalMovement = new Vector2(rb.velocity.x, rb.velocity.z);
@@ -153,8 +165,51 @@ public class IsoCharacterMovements : Character {
         rb.velocity = new Vector3(rb.velocity.x, jumpPower, rb.velocity.z);
         SetNotOnGround();
         charState = CharacterState.Jumping;
+
+        //Wait For Jump Button to be Released to be able to Jump again
+        jumpButtonReleased = false;
     }
 
+    void CharacterLedgeGrab(Vector3 hitPoint)
+    {
+        //Happens only at grabbing moment
+        if (!isOnLedge)
+        {
+            SetOnLedge();
+
+            //transform.Translate(Vector3.down * (hitPoint.y - 2));
+            transform.position = new Vector3(transform.position.x, hitPoint.y - 2, transform.position.z);
+
+            //Send a Grab Direction that won't change to the Animation
+            Vector3 animGrabDirection = Quaternion.AngleAxis(45, Vector3.up) * lastMoveDirection;
+            animator.SetFloat("AnimGrabDirectionX", animGrabDirection.x);
+            animator.SetFloat("AnimGrabDirectionY", animGrabDirection.z);
+
+            //Trigger the animation only once
+            charState = CharacterState.LedgeGrabbing;
+
+            //Wait For Jump Button to be Released to be able to Jump From Ledge
+            jumpButtonReleased = false;
+        }        
+    }
+
+    void CharacterLedgeClimb()
+    {
+        rb.velocity = new Vector3(rb.velocity.x, ledgeClimbingSpeed, rb.velocity.z);
+        isOnLedge = false;
+
+        charState = CharacterState.Jumping;
+        // ^  A remplacer par 
+        //charState = CharacterState.LedgeClimbing;
+
+    }
+
+    void CharacterLedgeDrop()
+    {
+        SetNotOnLedge();
+    }
+
+    
 	void HandleGroundedMovement(Vector2 move, bool jump){
 
         if (move.magnitude > 0f)
@@ -166,9 +221,13 @@ public class IsoCharacterMovements : Character {
             CharacterBrakeRunning();
         }
 
-        if (jump) {
+        if (jumpButtonReleased && jump) {
             CharacterJump();
 		}
+        else if (!jump)
+        {
+            jumpButtonReleased = true;
+        }
 	}
 
 	void HandleAirborneMovement(Vector2 move){
@@ -181,7 +240,6 @@ public class IsoCharacterMovements : Character {
             {
                 rb.AddForce(lastMoveDirection * 400 * Time.deltaTime, ForceMode.Acceleration);
             }
-
         }
 
         //Changer letat quand le perso redescend
@@ -189,35 +247,35 @@ public class IsoCharacterMovements : Character {
 			charState = CharacterState.Falling;
 		}
 
+        //Character deviendra onLedge si necessaire
+        CheckLedgeStatus();
 
     }
 
+    void HandleLedgedMovement(bool jump, bool cancel)
+    {
+        rb.velocity = Vector3.zero;     
+        
+        if (jumpButtonReleased && jump)
+        {
+            CharacterLedgeClimb();
+        }
+        else if (!jumpButtonReleased && jump)
+        {
 
-	/*
-	void UpdateAnimator(){	
+        }
+        else if (!jump)
+        {
+            jumpButtonReleased = true;
+        }
 
-		//Envoyer la direction du perso
-		animator.SetInteger("Direction", characterDirection);
+        if (cancel)
+        {
+            CharacterLedgeDrop();
+        }
+    }
 
-		//Declancher l'anim en fonction de l'action
-		switch (charState){
-		case CharacterState.Idle:
-			animator.SetTrigger ("Idle");
-			break;
-		case CharacterState.Running:
-			animator.SetTrigger ("Run");	
-			break;
-		case CharacterState.Jumping:
-			animator.SetTrigger ("Jump");
-			break;
-		case CharacterState.Falling:
-			animator.SetTrigger ("Fall");
-			break;
-		}
-	}
-	*/
-
-	void CheckWallStatus(){
+    void CheckWallStatus(){
 
 		RaycastHit hitInfo;
 
@@ -274,7 +332,6 @@ public class IsoCharacterMovements : Character {
             {
                 if (Physics.Raycast(transform.position, Vector3.down, out hitInfo, 0.1f))
                 {
-                    Debug.Log("Colle au sol");
                     SetOnGround();
                 }
             }
@@ -286,8 +343,76 @@ public class IsoCharacterMovements : Character {
         }
 
 #if UNITY_EDITOR
-        Debug.DrawLine(transform.position, transform.position + (Vector3.down * groundCheckDistance), Color.black);
+        Debug.DrawLine(transform.position, transform.position + (Vector3.down * groundCheckDistance), Color.red);
         #endif
+    }
+
+    void CheckLedgeStatus()
+    {
+        RaycastHit hitInfo;        
+        Vector3 ledgeDetectionStart = transform.position + lastMoveDirection + Vector3.up * 2 ;
+
+        Debug.DrawRay(ledgeDetectionStart,(Vector3.down), Color.red);
+
+        //Start ledge detection from characters height
+        if (!Physics.Raycast(ledgeDetectionStart, Vector3.down, out hitInfo, 0.1f))
+        {
+            //If there is nothing higher than character
+            //Look down for a ledge
+            //Il n'y a pas de mur au dessus, on peut regarder vers le bas
+            if (Physics.Raycast(ledgeDetectionStart, Vector3.down, out hitInfo, ledgeCheckDistance))
+            {
+
+                //Cannot Ledge again at same place
+                //Last LedgeGrabbed Object is Reseted From "SetOnGround"
+                if (hitInfo.collider.gameObject != lastLedgeGrabbedObject)
+                {
+                    Debug.Log("Different Ledge");
+
+                    //Il y a un mur en bas, on peut s'accrocher                
+                    if (hitInfo.normal == Vector3.up)
+                    {
+                        CharacterLedgeGrab(hitInfo.point);
+                    }
+                    else if (hitInfo.normal.y > -0.75f && hitInfo.normal.y < 0.25f)
+                    {
+                        Debug.Log("Ledge Normal != 1 : " + hitInfo.normal.y);
+                        CharacterLedgeGrab(hitInfo.point);
+                    }
+
+                    lastLedgeGrabbedObject = hitInfo.collider.gameObject;
+                }
+                else
+                {
+                    Debug.Log("Cannot Ledge because of Last LedgeGrabbed Object");
+                }
+            }
+            else
+            {
+                //There is no ledge to climb
+            }
+        } else
+        {
+            Debug.Log("Wall Blocking a Ledge");
+            SetNotOnLedge();
+        }
+
+    }
+
+    void SetOnLedge()
+    {
+        if (!isOnLedge)
+        {
+            isOnLedge = true;
+        }
+    }
+
+    void SetNotOnLedge()
+    {
+        if (isOnLedge)
+        {
+            isOnLedge = false;
+        }
     }
 
     void SetOnGround()
@@ -298,6 +423,10 @@ public class IsoCharacterMovements : Character {
             isGrounded = true;
             rb.velocity = new Vector3(rb.velocity.x, 0f, rb.velocity.z);
             rb.angularVelocity = new Vector3(rb.angularVelocity.x, 0f, rb.angularVelocity.z);
+
+            isOnLedge = false;
+
+            ResetLastLedgeGrabbedObject();
         }
     }
 
@@ -312,8 +441,13 @@ public class IsoCharacterMovements : Character {
 
             //Snap to ground
             transform.position = hitPoint;
+
+            isOnLedge = false;
+
+            ResetLastLedgeGrabbedObject();
         }
     }
+
     void SetNotOnGround()
     {
         if (isGrounded)
@@ -323,45 +457,64 @@ public class IsoCharacterMovements : Character {
         }
     }
 
+    void ResetLastLedgeGrabbedObject()
+    {
+        lastLedgeGrabbedObject = null;
+    }
+
     void ApplyGravity()
     {
-        if (!isGrounded)
+        if (!isGrounded && !isOnLedge)
         {
             Vector3 extraGravityForce = (Physics.gravity * gravityMultiplier) - Physics.gravity;
             rb.AddForce(extraGravityForce);
         }
     }
 
-    void SetAnimationDirection(){
-		
-	}
-
 	void UpdateAnimator (){
 
-		//A SUPPRIMER
-		float z = Mathf.RoundToInt(Mathf.Atan2(lastMoveDirection.x, lastMoveDirection.y) * Mathf.Rad2Deg);
 
-		animator.SetInteger ("Direction", directionAnim);
+        animator.SetInteger ("Direction", directionAnim);
 
-		switch (charState) {
-		case CharacterState.Idle:
-			animator.SetTrigger ("Idle");
-			break;
-		case CharacterState.Running:
-			animator.SetTrigger ("Run");
-			break;
-        case CharacterState.Braking:
-            animator.SetTrigger("Idle");
-            break;
-            case CharacterState.Jumping:
-			animator.SetTrigger ("Jump");
-			break;
-		case CharacterState.Falling:
-			//animator.SetTrigger ("Falling");
-			break;		
-		}
+        //Rotation du vecteur de direction
+        //Exemple
+        //vector = Quaternion.AngleAxis(-45, Vector3.up) * vector;
+        Vector3 animDirection;
+        animDirection = Quaternion.AngleAxis(45, Vector3.up) * lastMoveDirection;
+        animator.SetFloat("AnimDirectionX", animDirection.x);
+        animator.SetFloat("AnimDirectionY", animDirection.z);
+        
+        //Si il y a un changement de CharState
+        if ( charState != lastCharState)
+        {
+            switch (charState)
+            {
+                case CharacterState.Idle:
+                    animator.SetTrigger("Idle");
+                    break;
+                case CharacterState.Running:
+                    animator.SetTrigger("Run");
+                    break;
+                case CharacterState.Braking:
+                    animator.SetTrigger("Idle");
+                    break;
+                case CharacterState.Jumping:
+                    animator.SetTrigger("Jump");
+                    break;
+                case CharacterState.Falling:
+                    //animator.SetTrigger ("Falling");
+                    break;
+                case CharacterState.LedgeGrabbing:
+                    animator.SetTrigger("LedgeGrab");
+                    break;
+
+            }
+
+            lastCharState = charState;
+        }
 	}
 
+    // A supprimer quand toute les animation utiliserons un BLEND TREE
 	void SetCharacterDirectionForAnimation(){
 		
 		int angle = Mathf.RoundToInt(Vector3.SignedAngle(lastMoveDirection, Vector3.forward, Vector3.up));
@@ -401,28 +554,6 @@ public class IsoCharacterMovements : Character {
         {
             directionAnim = 1;
         }
-
-        Debug.Log(directionAnim);
-
-
-        /* ANCIEN
-        if (angle > -45 && angle < 45)
-        {
-            directionAnim = 0;
-        }
-        else if (angle < -45 && angle > -135)
-        {
-            directionAnim = 1;
-        }
-        else if (angle < -135 || angle > 135)
-        {
-            directionAnim = 2;
-        }
-        else if (angle > 45 && angle < 135)
-        {
-            directionAnim = 3;
-        }
-        */
     }
 
 }

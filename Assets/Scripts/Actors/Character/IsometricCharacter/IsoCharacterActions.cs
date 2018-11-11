@@ -11,6 +11,8 @@ public class IsoCharacterActions : PlayerActionSet {
 	public PlayerAction Down;
 
 	public PlayerAction Jump;
+    public PlayerAction Cancel;
+
 	public PlayerTwoAxisAction Move;
 
 	public PlayerAction Trigger1;
@@ -28,7 +30,9 @@ public class IsoCharacterActions : PlayerActionSet {
 		Right = CreatePlayerAction ("Move Right");
 		Up = CreatePlayerAction ("Move Up");
 		Down = CreatePlayerAction ("Move Down");
-		Jump = CreatePlayerAction ("Jump");
+
+        Jump = CreatePlayerAction ("Jump");
+        Cancel = CreatePlayerAction("Cancel");
 
 		Left2 = CreatePlayerAction ("Aim Left");
 		Right2 = CreatePlayerAction ("Aim Right");
@@ -57,7 +61,9 @@ public class IsoCharacterActions : PlayerActionSet {
 		Down2 = CreatePlayerAction ("Aim Down");
 
 		Jump = CreatePlayerAction ("Jump");
-		Move = CreateTwoAxisPlayerAction (Left, Right, Down, Up);
+        Cancel = CreatePlayerAction("Cancel");
+
+        Move = CreateTwoAxisPlayerAction (Left, Right, Down, Up);
 		Aim = CreateTwoAxisPlayerAction (Left2, Right2, Down2, Up2);
 		Trigger1 = CreatePlayerAction ("Left Trigger");
 		Trigger2 = CreatePlayerAction ("Right Trigger");

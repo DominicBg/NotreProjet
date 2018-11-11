@@ -52,7 +52,9 @@ public class IsometricCharacter : Character {
 
 
 	// Use this for initialization
-	void Start () {
+	public override void Start () {
+
+        base.Start();
 
 		//Prendre lanimator dans le sprite enfant GameObject
 		//animator = GetComponentInChildren<Animator>();
@@ -66,6 +68,8 @@ public class IsometricCharacter : Character {
 		charState = CharacterState.Idle;
 
 		Vector3 lastMoveDirection = Vector3.zero;
+
+
 
 	}
 
