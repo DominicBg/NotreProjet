@@ -14,11 +14,12 @@ public class TriggerZone : TriggerBase {
 	private enum PlayersNum{OnePlayer, MultiplePlayers, AllPlayers}
 	[SerializeField]private PlayersNum playersNumberActivation = PlayersNum.OnePlayer;
     
+
+
 	public bool[] charactersIn;
     
     public override void Initialize()
     {
-        Debug.Log("Start");
         base.Initialize();
 
         inGamePlayers = GameManager.gameManager.playersManager.charactersPlayedNow;
@@ -45,6 +46,8 @@ public class TriggerZone : TriggerBase {
                 }
             }
         }
+
+
 
         switch (playersNumberActivation) {
 	    	case PlayersNum.OnePlayer:
@@ -131,6 +134,8 @@ public class TriggerZone : TriggerBase {
 
     void GetCharactersAndTrigger()
     {
+
+
         bool triggerEmpty = true;
         Character[] charToSend = new Character[inGamePlayers.Length];
         for (int i = 0; i < inGamePlayers.Length; i++)
@@ -145,7 +150,6 @@ public class TriggerZone : TriggerBase {
         {
             TriggerActivables(charToSend);
         }
-
     }
 
 

@@ -5,17 +5,15 @@ using UnityEngine;
 public class TriggerBase : MonoBehaviour {
 
     public bool triggered;
+    public bool staysTriggered;
+    public float disablingDelay;
     public GameObject[] objectsToActive;
     public IActivable[] activables;
 
-    public bool delayTriggering;
-    public float delayTime;
-
-    public bool delayPassed;
+    IEnumerator resetTrigger;
 
     public virtual void Initialize()
     {
-        Debug.Log(this + " Initailisation");
         //Si il y a des objets dans le tableau
         if(objectsToActive != null)
         {
@@ -26,7 +24,6 @@ public class TriggerBase : MonoBehaviour {
                 if (tempz != null)
                 {
                     temp[i] = tempz;
-                    Debug.Log("OBJET AJOUTE : " + tempz);
                 }
             }
             activables = temp;
@@ -34,8 +31,6 @@ public class TriggerBase : MonoBehaviour {
         {
             Debug.Log(this + " Tableau d'objet a activer vide!");
         }
-
-
 
 
     }
@@ -49,6 +44,7 @@ public class TriggerBase : MonoBehaviour {
         {         
             zzz.Activate();            
         }
+
     }
 
     public virtual void TriggerDesactivables()
@@ -82,7 +78,22 @@ public class TriggerBase : MonoBehaviour {
         }
     }
 
+    IEnumerator DelayBeforeDisable()
+    {
+        Debug.Log("Delay before disable Start : " + Time.time);
 
+        if(disablingDelay != 0f)
+        {
+            yield return new WaitForSeconds(disablingDelay);
+            TriggerDesactivables();
+        }
+        else
+        {
+            yield return null;
+        }
+
+
+    }
 
 
 

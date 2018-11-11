@@ -9,7 +9,7 @@ public class TriggerBomb : TriggerBase, IExplosable {
         base.Initialize();
     }
 
-    public void Explode(Vector3 zed) {
+    public void Explode(float expforce, Vector3 zed) {
         TriggerActivables();
     }
 
