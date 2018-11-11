@@ -24,15 +24,57 @@ public class GameManagerEditor : Editor
 	}
 
 	void CheckIfLevelDataExists(){
+
 		levelDataExists = false;
+
 		Scene scene = SceneManager.GetActiveScene ();
 		string levelsPath = UsefulPath.levelScenes + scene.name + ".unity";
+        Debug.Log(levelsPath);
+        
+
 		if (File.Exists (levelsPath)) {
 			levelDataExists = true;
+            Debug.Log("Level Data exists");
+            if (manager.levelData == null)
+            {
+                //Load level data into Manager
+                LoadLevelDataOnManager(levelsPath);
+
+            } else if (manager.levelData != null){
+                Debug.Log(this.name + " Leveldata Loade");                
+            }
 		}
+        else if (File.Exists(levelsPath))
+        {
+            Debug.Log("Level Path not found. Check Build Settings - Scenes in build");
+        }
+
 	}
 
-	public override void OnInspectorGUI(){
+    //If LevelData is not Loaded into Game Manager
+    void LoadLevelDataOnManager(string levelPath)
+    {
+        Debug.Log("Ouverture du LoadLevelDataManager");
+
+        Scene scene = SceneManager.GetActiveScene();
+        string levelDataPath = UsefulPath.levelData + scene.name + ".asset";
+        Debug.Log(levelDataPath + " Path");
+
+        LevelData zzz = (LevelData)AssetDatabase.LoadAssetAtPath(levelDataPath, typeof(LevelData));
+
+        if (zzz != null)
+        {
+            Debug.Log(zzz);
+        } else
+        {
+            Debug.Log("NON TORUV");
+        }
+
+        Debug.Log("LevelData : " + zzz.name);
+        manager.levelData = zzz;
+    }
+
+    public override void OnInspectorGUI(){
 
 		if (!Application.isPlaying) {
 			manager.launchingFrom = (LaunchingFrom)EditorGUILayout.EnumPopup ("Play Mode : ", manager.launchingFrom);
@@ -99,10 +141,7 @@ public class GameManagerEditor : Editor
 		EditorGUILayout.LabelField ("Infos dans le manager");
 	}
 
-	void SetLevelDataOnManager(){
-	
-	
-	} 
+
 }
 
 

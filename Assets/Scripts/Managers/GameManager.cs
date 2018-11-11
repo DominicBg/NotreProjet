@@ -72,7 +72,12 @@ public class GameManager : MonoBehaviour {
 		ChangerMode (new GMLoadLevel ());
 	}
 
-	public void PlayLevel(){
+    public void RestartLevel()
+    {
+        ChangerMode(new GMLoadLevel());
+    }
+
+    public void PlayLevel(){
 		ChangerMode (new GMPlayingLevel ());
 	}
 
@@ -141,14 +146,14 @@ public class GMLaunchGameFromStart : IGameManager {
 public class GMLoadLevel : IGameManager {
 	
 	private readonly GameManager gameManager;
-	SetupScene levelLoader = null;
+	SetupScene setupScene = null;
 	public GMLoadLevel (){
 		gameManager = GameManager.gameManager;
 	}
 
 	public void Start (){
-		levelLoader = gameManager.gameObject.AddComponent<SetupScene> ();
-		levelLoader.StartLevelLoading ();
+		setupScene = gameManager.gameObject.AddComponent<SetupScene> ();
+		setupScene.StartLevelLoading ();
 	}
 
 	public void UpdateState(){

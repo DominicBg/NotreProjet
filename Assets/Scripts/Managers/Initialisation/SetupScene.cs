@@ -22,7 +22,7 @@ public class SetupScene : MonoBehaviour{
 		StartCoroutine (SceneLoadingCoroutine ());	
 	}
 	public IEnumerator SceneLoadingCoroutine(){
-		
+        
 		//Attendre que la scene soit chargee
 		sceneIsLoaded = false;
 		LoadingSceneFrom ();
@@ -57,17 +57,21 @@ public class SetupScene : MonoBehaviour{
 	}
 
 	void LoadingSceneFrom(){
-		//Initialisation du niveau depuis Main Menu ou depuis l'editeur
+        //Initialisation du niveau depuis Main Menu ou depuis l'editeur
+
 		if (gameManager.launchingFrom == ManagerEnums.LaunchingFrom.ThisLevel)
 		{
 			//Si la map est deja ouverte dans l'editeur
 			sceneIsLoaded = true;
 			gameManager.launchingFrom = ManagerEnums.LaunchingFrom.StartMenu;
+            Debug.Log("Lauch From Editor :" + gameManager.levelData);
 		} else {
 			SceneManager.LoadScene (gameManager.levelData.mapName, LoadSceneMode.Single);
 			SceneManager.sceneLoaded += OnSceneLoaded;
-		}
-	}
+            Debug.Log("From Setup scene: level data :" + gameManager.levelData);
+
+        }
+    }
 
 	void OnSceneLoaded(Scene scene, LoadSceneMode mode){	
 		//Delegate Disabled

@@ -27,3 +27,8 @@ public interface IDamageable
 {
 	void Damage (int damageValue);
 }
+
+public interface IExplosable
+{
+    void Explode(float expForce, Vector3 posExplosion);
+}

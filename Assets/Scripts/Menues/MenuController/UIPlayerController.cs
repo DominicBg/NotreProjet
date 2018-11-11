@@ -19,6 +19,8 @@ public class UIPlayerController : MonoBehaviour {
 	public bool button2;
 	public bool button2Ready;
 
+    public bool restartButton;
+
 	public bool up;
 	public bool down;
 	public bool left;
@@ -40,57 +42,78 @@ public class UIPlayerController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-
+        //STate : Looking for a canvas
 		if (controller != null && connectedCanvas == null && controller.AnyButton) {
 			GetCanvas ();
 		}
+        
+        //STATE :Utilisation de Canvas connecte
+        if (controller != null && connectedCanvas != null)
+        {
+            //Se deplacer dans un Canvas connecte
+            UseConnectedCanvas();
+        }
 
-		if (controller != null && connectedCanvas != null) {			
 
-			if (controller.Action1.WasPressed && button1Ready) {
-				connectedCanvas.button1 = true;
-				StartCoroutine ("Button1Wait");
-			}
+        if (controller != null && controller.CommandIsPressed)
+        {
+            Debug.Log("Restart asked from : " + this);
+            RestartLevel();
+        }
 
-			if (controller.Action2.WasPressed && button2Ready) {
-				connectedCanvas.button2 = true;
-				StartCoroutine ("Button2Wait");
-			}
 
-			if (controller.Direction.WasPressed && directionReady) {
-				TwoAxisInputControl zzz = controller.Direction;
+    }
 
-                //Conversion de l'angle du stick en direction Haut Droite Bas Gauche
-                int angle = Mathf.RoundToInt(zzz.Angle);
+    //UseConnectedCanvas
+    void UseConnectedCanvas()
+    {
+        //Se deplacer dans un Canvas connecte
+        if (controller.Action1.WasPressed && button1Ready)
+        {
+            connectedCanvas.button1 = true;
+            StartCoroutine("Button1Wait");
+        }
 
-                if (angle > 315 || angle <= 45)
-                {
-                    //Debug.Log("1");
-                    connectedCanvas.up = true;
-                }
-                else if (angle > 45 && angle <= 135)
-                {
-                    //Debug.Log("2");
-                    connectedCanvas.left = true;
-                }
-                else if (angle > 135 && angle <= 215)
-                {
-                    //Debug.Log("3");
-                    connectedCanvas.down = true;
-                }
-                else if (angle > 215 && angle <= 315)
-                {
-                    //Debug.Log("4");
-                    connectedCanvas.right = true;
-                }
-                StartCoroutine("DirectionWait");
+        if (controller.Action2.WasPressed && button2Ready)
+        {
+            connectedCanvas.button2 = true;
+            StartCoroutine("Button2Wait");
+        }
+
+        if (controller.Direction.WasPressed && directionReady)
+        {
+            TwoAxisInputControl zzz = controller.Direction;
+
+            //Conversion de l'angle du stick en direction Haut Droite Bas Gauche
+            int angle = Mathf.RoundToInt(zzz.Angle);
+
+            if (angle > 315 || angle <= 45)
+            {
+                //Debug.Log("1");
+                connectedCanvas.up = true;
             }
+            else if (angle > 45 && angle <= 135)
+            {
+                //Debug.Log("2");
+                connectedCanvas.left = true;
+            }
+            else if (angle > 135 && angle <= 215)
+            {
+                //Debug.Log("3");
+                connectedCanvas.down = true;
+            }
+            else if (angle > 215 && angle <= 315)
+            {
+                //Debug.Log("4");
+                connectedCanvas.right = true;
+            }
+            StartCoroutine("DirectionWait");
+        }
 
-		}
-		// FIN DU IF CONTROLLER != NULL
-	}
+    }
 
-	IEnumerator Button1Wait(){	
+
+    IEnumerator Button1Wait(){	
 		button1Ready = false;
 		yield return new WaitForSeconds (0.1f);
 		button1Ready = true;
@@ -120,11 +143,15 @@ public class UIPlayerController : MonoBehaviour {
 		}
 	}
 
-
-
-
 	public void ConnectToCanvas(UIControllableCanvas canvas){		
 		connectedCanvas = canvas;
 		canvas.Initialize ();
 	}
+
+
+    void RestartLevel()
+    {
+        GameManager.gameManager.RestartLevel();
+    }
+
 }

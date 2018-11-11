@@ -16,12 +16,12 @@ public class CharactersInitialisation {
     private Character[] charToSpawn;
     private SpawnPoint[] spawnList;
 
-    public void Initialization(){       
-        
-        LoadLevelCharacterFromLevelData();
+    public void Initialization(){
 
         GetSpawnPoints();
 
+        LoadLevelCharacterFromLevelData();
+        
         InstantiateLoadedCharacters();
         
 		//Fin de l'initialisation
@@ -34,20 +34,24 @@ public class CharactersInitialisation {
         spawnList = Object.FindObjectsOfType(typeof(SpawnPoint)) as SpawnPoint[];
     }
 
+    //Set an array of needed Characters prefab from characterCards from Level Data 
     void LoadLevelCharacterFromLevelData()
     {
-        lvlData = GameManager.gameManager.levelData;
-        charToSpawn = new Character[lvlData.startCharacter.Length];
+
+        //Register Characters prefab. 
+        //In case of different Characters.
+        charToSpawn = new Character[GameManager.gameManager.levelData.startCharacter.Length];        
 
         for (int i = 0; i < charToSpawn.Length; i++)
         {
-            if (lvlData.startCharacter[i] != null)
+            if (GameManager.gameManager.levelData.startCharacter[i] != null)
             {
-                string charCardPath = AssetDatabase.GetAssetPath(lvlData.startCharacter[i]);
+                //Set Character prefab from Character Card
+                string charCardPath = AssetDatabase.GetAssetPath(GameManager.gameManager.levelData.startCharacter[i]);
                 CharacterCard charCard = AssetDatabase.LoadAssetAtPath(charCardPath, typeof(CharacterCard)) as CharacterCard;
-                charToSpawn[i] = charCard.characterPrefab; 
+                charToSpawn[i] = charCard.characterPrefab;
             }
-            else if (lvlData.startCharacter[i] == null)
+            else if (GameManager.gameManager.levelData.startCharacter[i] == null)
             {
                 Debug.Log("PERSO MANQUANT DANS LEVEL CARD");
                 charToSpawn[i] = (Character)Resources.Load("Prefabs/IsoCharacter", typeof(Character));
@@ -55,31 +59,37 @@ public class CharactersInitialisation {
         }
     }
 
+
+    //Instantiate Characters prefab from previously made array
     void InstantiateLoadedCharacters()
     {
         //Creer les 4 personnages d'origine
-        Debug.Log(playersManager.playersNumber);
         Character[] characterToInstantiate = new Character[playersManager.playersNumber];
 
         for (int i = 0; i < playersManager.playersNumber; i++)
         {
             //Instantiation
             characterToInstantiate[i] = GameObject.Instantiate(charToSpawn[i], Vector3.zero, Quaternion.Euler(Vector3.zero));
-            characterToInstantiate[i].characterCard = lvlData.startCharacter[i];
 
+            PlayerConfig[] playerConfigs = playersManager.playersConfig;
 
             //Mettre le controleur - A DEPLACER DANS CONTROLLER MANAGER
-            IsoCharacterController zzz = characterToInstantiate[i].gameObject.AddComponent(typeof(IsoCharacterController)) as IsoCharacterController;
-            zzz.device = playersManager.playersConfig[i].controller;
+            IsoCharacterController isoCharControler = playerConfigs[i].gameObject.AddComponent(typeof(IsoCharacterController)) as IsoCharacterController;
+            isoCharControler.device = playerConfigs[i].controller;
+            isoCharControler.characterMovements = characterToInstantiate[i].GetComponent<IsoCharacterMovements>();
+            isoCharControler.weapon = characterToInstantiate[i].GetComponentInChildren<Weapon>();
+            
 
             //Placer les personnages sur le SpawnPoint
             characterToInstantiate[i].transform.position = spawnList[i].gameObject.transform.position;
-
+            characterToInstantiate[i].respawnPlace = characterToInstantiate[i].transform.position;
             SetInformationFromPlayerCard(characterToInstantiate[i], i);
         }
 
         playersManager.charactersPlayedNow = new Character[characterToInstantiate.Length];
         playersManager.charactersPlayedNow = characterToInstantiate;
+
+
     }
 
 
@@ -96,8 +106,6 @@ public class CharactersInitialisation {
 		PlayableCharacter playablePart = character.GetComponent<PlayableCharacter> ();
 		playablePart.playerNumber = i;
 		playablePart.playerColor = card.playerColor;
-
-
 	}
 
 

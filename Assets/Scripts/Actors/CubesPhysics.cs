@@ -14,7 +14,7 @@ public class CubesPhysics : MonoBehaviour, IExplosable {
 		
 	}
 
-	public void Explode(Vector3 posExplosion){
+	public void Explode(float expForce, Vector3 posExplosion){
 		
 	}
 }

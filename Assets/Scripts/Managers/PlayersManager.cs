@@ -46,11 +46,7 @@ public class PlayersManager : MonoBehaviour {
 	void Start (){
 		CheckForPresentsController ();	
 	}
-
-	void Update(){
-		//CheckForNewPlayer ();
-	}
-
+    
 	void CheckForPresentsController(){
 
 		//Lister les devices

@@ -14,9 +14,9 @@ public class GameMode : MonoBehaviour {
 	}
 	public GameModeState gameModeState;
 
-	public bool startingDone;
-	public bool playingDone;
-	public bool endingDone;
+	bool startingDone;
+	bool playingDone;
+	bool endingDone;
 
 	public void Initialize(){
 		//Obligatoire pour l'instant
@@ -53,6 +53,8 @@ public class GameMode : MonoBehaviour {
 			EndingMode ();
 			break;
 		}
+
+
 	}
 
 	void StartingMode(){
@@ -109,6 +111,19 @@ public class GameMode : MonoBehaviour {
 	public virtual void EndMode(){		
 		gameManager.EndLevel ();
 	}
+
+    public virtual void RestartMode()
+    {
+        //Can only be called from PlayingMode
+        if (gameModeState == GameModeState.Playing)
+        {
+            //Called to reset bool values
+            gameManager.RestartLevel();
+
+
+        }
+
+    }
 
 	//Fonction realisees dans les scripts des gameModes
 	public virtual void ModeStartingStart(){	
