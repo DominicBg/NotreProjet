@@ -47,11 +47,12 @@ public class Debris : MonoBehaviour, IExplosable {
 	}
 
 
-	public void Explode(Vector3 zzz){
-	
-	}
+    public void Explode(float expforce, Vector3 zed)
+    {
 
-	void ChangeColor(){
+    }
+
+    void ChangeColor(){
 
 		if (scale <= 1) {
 			//rend.material = blue;

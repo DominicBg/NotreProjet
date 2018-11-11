@@ -58,7 +58,6 @@ public class BombLauncher : Weapon {
         {
             string assetPath = AssetDatabase.GetAssetPath(zzz.characterCard);
             CharacterCard charCard = AssetDatabase.LoadAssetAtPath(assetPath, typeof(CharacterCard)) as CharacterCard;
-            Debug.Log(charCard);
 
             assetPath = AssetDatabase.GetAssetPath(charCard.characterBombCard);
             bombCard = AssetDatabase.LoadAssetAtPath(assetPath, typeof(BombCard)) as BombCard;
@@ -81,20 +80,14 @@ public class BombLauncher : Weapon {
 		//Position et direction de depart
 		Vector3 posDepart = spawner.transform.position;
 		Vector3 dirDepart = spawner.transform.right;
-		//Tracer cette ligne
+
+        //Shootdistance, recuperer la valeur depuis la CharCard
+        //Tracer cette ligne
+        shootDistance = 8f;
 		Debug.DrawRay (posDepart, dirDepart * shootDistance, Color.blue);
 
-		//Position sur l'axe de depart en fonction de shootDistance et magnitude du stick 
-		float tempAimDistance;
-		if (aimingDistance > 0) {
-			tempAimDistance = aimingDistance; //Si le stick de droite est utilise
-		} else {
-			//Sinon, utiliser celui de gauche, ou rien 
-			tempAimDistance = aimingDistance; // VISEE AVEC LE STICK DE GAUCHE DESACTIVEE
-			//tempAimDistance = leftStickAimDistance;
-		}
-
-		float disActuelle = shootDistance * (tempAimDistance / 1);
+        //Position sur l'axe de depart en fonction de shootDistance et magnitude du stick 
+        float disActuelle = shootDistance * (aimingDistance / shootDistance);
 		if (disActuelle <= 0) 
 			disActuelle = 0.1f;
 		
@@ -119,19 +112,17 @@ public class BombLauncher : Weapon {
 
 		Debug.DrawLine (posDepart, cible.transform.position,Color.red);	
 	}
+    
 
-
-
-
-
-
-
+    /*
 	public void AimAndUse(Vector3 leftInput, float leftStickDistance, Vector3 aim, float aimDistance, bool explode, bool shoot){
 
-		leftStickAimDistance = leftStickDistance;
+        Debug.Log("AIMANDUSE");
+
+        leftStickAimDistance = leftStickDistance;
 		aimingDistance = aimDistance;
 
-		//If Right Stick is used. Else Use Right Stick
+		//If Right Stick is used. Else Use Left Stick
 		if (aim.magnitude > 0f) {			
 			aimAngle = Mathf.RoundToInt (Mathf.Atan2 (aim.x, aim.z) * Mathf.Rad2Deg);
 		} else {
@@ -140,7 +131,7 @@ public class BombLauncher : Weapon {
 			}
 		}
 
-		launcherDirection = aimAngle - 90;
+		//launcherDirection = aimAngle - 90;
 
 		// -45f is for Camera Rotation, modify this later on Controller
 		transform.rotation = Quaternion.Euler (0f, launcherDirection, 0f);
@@ -154,21 +145,24 @@ public class BombLauncher : Weapon {
 			ExplodeAllBombs();
 
 	}
-
+    */
 
 	//NOUVEAU
+    //Called by IsoCharacterController
+    //This code should be a IsoCharacterWeapon
 	public override void UseWeapon (Vector2 leftInput, Vector2 rightInput, bool shoot, bool explode){
-		
+        
 		aimingDistance = rightInput.magnitude * shootDistance;
 		//Viser avec le stick de gauche ou celui de droite
 		if (rightInput.magnitude > 0f) {
 			aimAngle = Mathf.RoundToInt (Mathf.Atan2 (rightInput.x, rightInput.y) * Mathf.Rad2Deg);
 		} else if (leftInput.magnitude > 0f) {
-			aimAngle = Mathf.RoundToInt(Mathf.Atan2 (leftInput.x, leftInput.y) * Mathf.Rad2Deg);
+            aimingDistance = leftInput.magnitude * shootDistance;
+            aimAngle = Mathf.RoundToInt(Mathf.Atan2 (leftInput.x, leftInput.y) * Mathf.Rad2Deg);
 		}
 
 		//Modifier pour prendre en compte l'ange de la camera
-		launcherDirection = aimAngle - 90;
+		launcherDirection = aimAngle + 180 + 45;
 		transform.rotation = Quaternion.Euler (0f, launcherDirection, 0f);
 
 		if (shoot) 

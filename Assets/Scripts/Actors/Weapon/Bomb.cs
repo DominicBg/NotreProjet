@@ -90,9 +90,9 @@ public class Bomb : MonoBehaviour {
 			//Si l'objet a l'interface IExplosable
 			if (explosable != null) {				
 				Rigidbody rb = hit.GetComponent<Rigidbody> ();
-				rb.AddExplosionForce (expForce, posExplosion, 12f, 10f);
+				//rb.AddExplosionForce (expForce, posExplosion, 12f, 10f);
                 //Debug.Log ("EXPLOSABLE");
-                explosable.Explode(Vector3.zero);
+                explosable.Explode(expForce, posExplosion);
 			}
 		}
 
