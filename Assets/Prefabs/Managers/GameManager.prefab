@@ -56,7 +56,7 @@ GameObject:
   m_Layer: 0
   m_Name: SetupScene
   m_TagString: Untagged
-  m_Icon: {fileID: 6926474624037801865, guid: 0000000000000000d000000000000000, type: 0}
+  m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -113,15 +113,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameManagerMode: 0
-  levelData: {fileID: 11400000, guid: 9205b230504999a45b484bcdd892b612, type: 2}
+  levelData: {fileID: 11400000, guid: 5b9c16435395a1a49af542ee92986f7b, type: 2}
   currentGameMode: {fileID: 0}
-  launchingFrom: 1
-  startingFromLevel: 0
-  setupScene: {fileID: 114949296413057158}
   playersManager: {fileID: 0}
   uiManager: {fileID: 0}
+  launchingFrom: 1
   nbrJoueursTemp: 1
-  inspectorChecked: 1
 --- !u!114 &114705058113487250
 MonoBehaviour:
   m_ObjectHideFlags: 1
