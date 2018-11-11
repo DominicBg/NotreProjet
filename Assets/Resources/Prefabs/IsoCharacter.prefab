@@ -208,7 +208,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1035681546721126}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 190.5, y: 1.8000002, z: -45.5}
+  m_LocalPosition: {x: 201.19951, y: 2, z: -57.338177}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4028472589387886}
@@ -463,6 +463,7 @@ MonoBehaviour:
   characterCard: {fileID: 11400000, guid: b242414eccde9854fa6ad71544ac3e84, type: 2}
   characterName: 
   dead: 0
+  respawnPlace: {x: 0, y: 0, z: 0}
   runningSpeedAct: 0
   runningSpeedMax: 3000
   runningSpeedAcceleration: 150
@@ -477,6 +478,13 @@ MonoBehaviour:
   isLifted: 0
   wallCheckDistance: 1
   isOnWall: 0
+  ledgeCheckDistance: 0.5
+  ledgeClimbingSpeed: 15
+  isOnLedge: 0
+  canClimbLedge: 0
+  canClimbTime: 0
+  jumpButtonReleased: 0
+  lastLedgeGrabbedObject: {fileID: 0}
   playerNumber: 0
   charState: 0
   directionAnim: 0
