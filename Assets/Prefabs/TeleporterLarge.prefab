@@ -153,6 +153,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   triggered: 0
+  staysTriggered: 0
+  disablingDelay: 0
   objectsToActive:
   - {fileID: 1148026947428742}
   inGamePlayers: []
