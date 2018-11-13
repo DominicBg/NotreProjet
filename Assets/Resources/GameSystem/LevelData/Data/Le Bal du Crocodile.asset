@@ -16,9 +16,9 @@ MonoBehaviour:
   mapName: Le Bal du Crocodile
   levelMinPlayers: 3
   levelMaxPlayers: 3
-  imageLevel: {fileID: 0}
+  imageLevel: {fileID: 21300000, guid: f80c22bce8c567c478bf59bc9d875555, type: 3}
   textureLevel: {fileID: 2800000, guid: 553b031720f57de468976dfd5dda9658, type: 3}
-  levelDescription: 
+  levelDescription: Attention aux dents pointues !
   startCharacter:
   - {fileID: 11400000, guid: f718a8dea14537b45bed6fc1cc0a727c, type: 2}
   - {fileID: 11400000, guid: f718a8dea14537b45bed6fc1cc0a727c, type: 2}
