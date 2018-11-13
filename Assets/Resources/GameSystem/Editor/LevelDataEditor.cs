@@ -9,45 +9,37 @@ public class LevelDataEditor : Editor {
 
     public LevelData levelData;
 
+    //Afficher le Custom Editor quand on clique sur un Level Data
     private void OnEnable()
     {
         levelData = (LevelData)target;
     }
 
+    //Affichage des differents champs sur le formulaire
     public override void OnInspectorGUI()
     {
         EditorGUILayout.LabelField("--== Mode de jeu du niveau ==--");
         levelData.gameMode = (GameModeData)EditorGUILayout.ObjectField("Game Mode Data", levelData.gameMode, typeof(GameModeData), true);
 
-        EditorGUILayout.LabelField("--== Scene correspondante au niveau ==--");
-        //levelData.scene = (GameObject)EditorGUILayout.ObjectField("Scene", levelData.scene, typeof(GameObject), true);
+        EditorGUILayout.LabelField("--== Nom du niveau ==--");
+        levelData.mapName = EditorGUILayout.TextField("Nom : ", levelData.mapName);
 
+        EditorGUILayout.LabelField("--== Description du niveau ==--");
+        levelData.levelDescription = EditorGUILayout.TextField("Description : ", levelData.levelDescription);
+        
         EditorGUILayout.LabelField("--== Nombre de joueurs ==--");
-        EditorGUILayout.IntField("Minimum : ", levelData.levelMinPlayers);
-        EditorGUILayout.IntField("Maximum : ", levelData.levelMaxPlayers);
+        levelData.levelMinPlayers = EditorGUILayout.IntField("Minimum : ", levelData.levelMinPlayers);
+        levelData.levelMaxPlayers = EditorGUILayout.IntField("Maximum : ", levelData.levelMaxPlayers);
 
         EditorGUILayout.LabelField("--== Image du niveau ==--");
-        DrawImageLevel();
+        levelData.imageLevel = (Sprite)EditorGUILayout.ObjectField("Image du niveau", levelData.imageLevel, typeof(Sprite), true);
 
         EditorGUILayout.LabelField("--== Personnages de depart ==--");
         DrawCharacterArray();
+        
     }
 
-    void DrawImageLevel()
-    {
-        if (levelData.imageLevel == null)
-        {
-            EditorGUILayout.LabelField("Choisir une Texture de niveau");
-        }
-        else if (levelData.imageLevel != null){
-            EditorGUILayout.LabelField("Sprite de niveau present. CHANGER SPRITE POUR TEXTURE DANS LE CODE");
-        }
-
-        levelData.textureLevel = (Texture)EditorGUILayout.ObjectField("Image", levelData.textureLevel, typeof(Texture), true);
-        //levelData.imageLevel = (Sprite)EditorGUILayout.ObjectField("Image du niveau", levelData.gameMode, typeof(Sprite), true);
-
-    }
-
+    //Affichage special du champ des personnages du niveau
     void DrawCharacterArray()
     {
         if (levelData.startCharacter.Length == 0)
@@ -55,6 +47,7 @@ public class LevelDataEditor : Editor {
             levelData.startCharacter = new CharacterCard[4];
         }
         
+        //Aller chercher la Property CharacterCard[] pour pouvoir l'afficher dans le Custom Object
         SerializedProperty prop = serializedObject.FindProperty("startCharacter");
         EditorGUILayout.PropertyField(prop, true);
 
