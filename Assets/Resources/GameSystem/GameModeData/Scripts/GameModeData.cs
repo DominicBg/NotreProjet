@@ -13,4 +13,6 @@ public class GameModeData : ScriptableObject {
 	public int gameModeMinPlayer;
 	public int gameModeMaxPlayer;
 
+    public string gameModeDescription;
+
 }
