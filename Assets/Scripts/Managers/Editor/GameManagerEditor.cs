@@ -28,25 +28,22 @@ public class GameManagerEditor : Editor
 		levelDataExists = false;
 
 		Scene scene = SceneManager.GetActiveScene ();
-		string levelsPath = UsefulPath.levelScenes + scene.name + ".unity";
-        Debug.Log(levelsPath);
-        
+		string levelsPath = UsefulPath.levelScenes + scene.name + ".unity";        
 
 		if (File.Exists (levelsPath)) {
 			levelDataExists = true;
-            Debug.Log("Level Data exists");
             if (manager.levelData == null)
             {
                 //Load level data into Manager
                 LoadLevelDataOnManager(levelsPath);
 
             } else if (manager.levelData != null){
-                Debug.Log(this.name + " Leveldata Loade");                
+
             }
 		}
         else if (File.Exists(levelsPath))
         {
-            Debug.Log("Level Path not found. Check Build Settings - Scenes in build");
+			
         }
 
 	}

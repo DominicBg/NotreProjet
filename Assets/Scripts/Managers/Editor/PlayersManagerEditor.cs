@@ -21,7 +21,6 @@ public class PlayersManagerEditor : Editor {
 		pManager = (PlayersManager)target;
 
 		manager = (GameManager)FindObjectOfType (typeof(GameManager)) as GameManager;
-		Debug.Log (manager.nbrJoueursTemp);
 
 		CheckManagerState ();
 

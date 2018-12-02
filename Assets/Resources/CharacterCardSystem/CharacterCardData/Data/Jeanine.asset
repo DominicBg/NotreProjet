@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Name: Jeanine
   m_EditorClassIdentifier: 
   characterName: 'Jeanine '
-  description: gr8
+  description: Nice Jeanine
   characterPrefab: {fileID: 114087678880162660, guid: 45fbd27efeb276147a2b71b542b7c59c,
     type: 2}
   characterBomb: {fileID: 0}

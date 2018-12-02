@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Name: JeanMicheline
   m_EditorClassIdentifier: 
   characterName: JeanMicheline
-  description: qwerty confirmed
+  description: Qwerty confirmed
   characterPrefab: {fileID: 114087678880162660, guid: 45fbd27efeb276147a2b71b542b7c59c,
     type: 2}
-  characterBomb: {fileID: 0}
+  characterBomb: {fileID: 114990240367596370, guid: 793951a672b9e5a48be6b7543fbe79ec,
+    type: 2}
   characterBombCard: {fileID: 11400000, guid: 7c8ec8a7bd59ef242bed6aae377e71f6, type: 2}
-  runningSpeed: 7
-  jumpHeight: 0.1
+  runningSpeed: 10
+  jumpHeight: 0.5

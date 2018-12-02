@@ -11,11 +11,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e45639ec225f3c64784a6cf55b5235ef, type: 3}
   m_Name: CollanteV1
   m_EditorClassIdentifier: 
-  bombName: nianinaia
-  description: 
+  bombName: StickBombDangerous
+  description: Bomb Collante qui fait mal
   bombGameObject: {fileID: 0}
-  explosionForce: 0.85
-  maxBombNumber: 0
+  explosionForce: 1
+  maxBombNumber: 5
   bombMaterial: 0
   bombTrigger: 0
   triggerTime: 1
